@@ -1,770 +1,584 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
 <meta charset="UTF-8">
-
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0,
-               maximum-scale=1.0, user-scalable=no">
-
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <meta name="theme-color" content="#090b18">
-<meta name="mobile-web-app-capable" content="yes">
-
 <title>BDT CASH</title>
 
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
 <style>
-/* ================================
-   BDT CASH
-   Single File Telegram Mini App UI
-================================ */
-
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    -webkit-tap-highlight-color:transparent;
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  -webkit-tap-highlight-color:transparent;
 }
 
 :root{
-    --bg:#070914;
-    --bg2:#0d1020;
-    --card:#121528;
-    --card2:#171b31;
-    --purple:#8b4dff;
-    --purple2:#bd70ff;
-    --gold:#ffd34d;
-    --gold2:#f5a623;
-    --text:#ffffff;
-    --muted:#8e94aa;
-    --border:rgba(255,255,255,.08);
-    --green:#35d07f;
-    --red:#ff5b6e;
-}
-
-html{
-    scroll-behavior:smooth;
+  --bg:#080a17;
+  --card:#121529;
+  --card2:#181c32;
+  --purple:#8747f5;
+  --purple2:#bd61ff;
+  --gold:#ffd34d;
+  --muted:#9298ad;
+  --green:#35d07f;
 }
 
 body{
-    background:
-      radial-gradient(circle at 20% 0%,rgba(130,60,255,.18),transparent 35%),
-      radial-gradient(circle at 100% 20%,rgba(255,190,40,.10),transparent 30%),
-      var(--bg);
-    color:var(--text);
-    font-family:
-      Inter,Roboto,Arial,sans-serif;
-    min-height:100vh;
-    overflow-x:hidden;
-}
-
-button,
-input,
-select{
-    font:inherit;
-}
-
-button{
-    border:0;
-    color:white;
-    cursor:pointer;
+  background:
+    radial-gradient(circle at 20% 0,#55209a44,transparent 34%),
+    radial-gradient(circle at 100% 20%,#d49a2b22,transparent 30%),
+    var(--bg);
+  color:#fff;
+  font-family:Arial,sans-serif;
+  min-height:100vh;
 }
 
 .app{
-    width:100%;
-    max-width:700px;
-    margin:auto;
-    min-height:100vh;
-    padding-bottom:95px;
+  max-width:700px;
+  margin:auto;
+  padding-bottom:90px;
 }
 
-/* HEADER */
-
-.header{
-    padding:18px 16px 12px;
+header{
+  padding:18px 16px 0;
 }
 
-.topbar{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
+.top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
 
 .brand{
-    display:flex;
-    align-items:center;
-    gap:10px;
+  display:flex;
+  gap:10px;
+  align-items:center;
 }
 
 .logo{
-    width:45px;
-    height:45px;
-    border-radius:14px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:24px;
-    background:
-      linear-gradient(135deg,#8d45ff,#ffcc43);
-    box-shadow:
-      0 8px 25px rgba(135,65,255,.30);
+  width:46px;
+  height:46px;
+  border-radius:15px;
+  background:linear-gradient(135deg,#8c49ff,#ffd34d);
+  display:grid;
+  place-items:center;
+  font-size:25px;
 }
 
-.brand-name{
-    font-size:20px;
-    font-weight:900;
-    letter-spacing:.3px;
+.bn{
+  font-size:20px;
+  font-weight:900;
 }
 
-.brand-sub{
-    font-size:11px;
-    color:var(--muted);
-    margin-top:3px;
-}
-
-.profile-mini{
-    width:42px;
-    height:42px;
-    border-radius:50%;
-    background:linear-gradient(135deg,#222744,#7e49ff);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:20px;
-    border:1px solid rgba(255,255,255,.12);
-}
-
-/* NOTICE */
-
-.notice{
-    margin-top:14px;
-    background:rgba(18,21,40,.9);
-    border:1px solid rgba(184,112,255,.22);
-    border-radius:14px;
-    padding:11px 13px;
-    display:flex;
-    align-items:center;
-    gap:9px;
-    overflow:hidden;
-}
-
-.notice-icon{
-    color:var(--gold);
-    font-size:17px;
-}
-
-.notice-track{
-    white-space:nowrap;
-    overflow:hidden;
-    flex:1;
-}
-
-.notice-text{
-    display:inline-block;
-    color:#d7d9e4;
-    font-size:12px;
-    animation:noticeMove 16s linear infinite;
-}
-
-@keyframes noticeMove{
-    from{transform:translateX(100%)}
-    to{transform:translateX(-110%)}
-}
-
-/* BALANCE */
-
-.balance-card{
-    margin-top:15px;
-    position:relative;
-    overflow:hidden;
-    padding:20px;
-    border-radius:23px;
-    background:
-      linear-gradient(
-        135deg,
-        #5122a5 0%,
-        #8b42dd 45%,
-        #d69b28 150%
-      );
-    box-shadow:
-      0 15px 45px rgba(83,35,170,.30);
-}
-
-.balance-card:before{
-    content:"";
-    position:absolute;
-    width:180px;
-    height:180px;
-    right:-70px;
-    top:-80px;
-    border-radius:50%;
-    background:rgba(255,255,255,.10);
-}
-
-.balance-label{
-    font-size:12px;
-    color:rgba(255,255,255,.82);
-}
-
-.balance-row{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    margin-top:6px;
-}
-
-.balance{
-    font-size:34px;
-    font-weight:900;
-    letter-spacing:.5px;
-}
-
-.currency{
-    font-size:13px;
-    opacity:.85;
-}
-
-.coin-row{
-    margin-top:10px;
-    display:flex;
-    align-items:center;
-    gap:7px;
-    font-size:13px;
-}
-
-.coin{
-    color:#ffe16a;
-}
-
-.balance-actions{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:10px;
-    margin-top:17px;
-}
-
-.balance-btn{
-    padding:11px;
-    border-radius:12px;
-    background:rgba(0,0,0,.20);
-    border:1px solid rgba(255,255,255,.16);
-    font-size:12px;
-    font-weight:700;
-}
-
-/* SECTIONS */
-
-.section{
-    padding:0 16px;
-    margin-top:22px;
-}
-
-.section-head{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    margin-bottom:12px;
-}
-
-.section-title{
-    font-size:18px;
-    font-weight:900;
-}
-
-.section-link{
-    font-size:11px;
-    color:var(--purple2);
-}
-
-/* QUICK */
-
-.quick-grid{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:9px;
-}
-
-.quick{
-    padding:13px 5px;
-    border-radius:15px;
-    text-align:center;
-    background:var(--card);
-    border:1px solid var(--border);
-}
-
-.quick-icon{
-    font-size:22px;
-}
-
-.quick-name{
-    margin-top:7px;
-    font-size:10px;
-    color:#d2d5df;
-}
-
-/* GAMES */
-
-.categories{
-    display:flex;
-    gap:8px;
-    overflow-x:auto;
-    padding-bottom:5px;
-    scrollbar-width:none;
-}
-
-.categories::-webkit-scrollbar{
-    display:none;
-}
-
-.category{
-    white-space:nowrap;
-    padding:8px 13px;
-    border-radius:20px;
-    background:var(--card);
-    border:1px solid var(--border);
-    color:#aeb2c4;
-    font-size:11px;
-}
-
-.category.active{
-    background:linear-gradient(135deg,#7740df,#a957f2);
-    color:white;
-    border-color:transparent;
-}
-
-.game-grid{
-    margin-top:13px;
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:11px;
-}
-
-.game{
-    position:relative;
-    overflow:hidden;
-    min-height:145px;
-    padding:13px;
-    border-radius:19px;
-    background:
-      linear-gradient(145deg,#171a31,#0f1120);
-    border:1px solid var(--border);
-}
-
-.game:after{
-    content:"";
-    position:absolute;
-    width:90px;
-    height:90px;
-    right:-35px;
-    bottom:-35px;
-    border-radius:50%;
-    background:rgba(139,77,255,.10);
-}
-
-.game-top{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-}
-
-.game-icon{
-    width:52px;
-    height:52px;
-    border-radius:15px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:29px;
-    background:
-      linear-gradient(135deg,#281557,#8d4bdb);
-    box-shadow:0 8px 20px rgba(120,50,200,.22);
-}
-
-.hot{
-    padding:5px 7px;
-    border-radius:8px;
-    background:rgba(255,80,100,.13);
-    color:#ff7381;
-    font-size:9px;
-    font-weight:800;
-}
-
-.game-name{
-    margin-top:12px;
-    font-weight:800;
-    font-size:14px;
-}
-
-.game-desc{
-    margin-top:4px;
-    color:var(--muted);
-    font-size:10px;
-}
-
-.play{
-    position:absolute;
-    left:13px;
-    right:13px;
-    bottom:12px;
-    padding:8px;
-    border-radius:10px;
-    background:linear-gradient(135deg,#6635c8,#a552ec);
-    font-size:11px;
-    font-weight:800;
-    z-index:2;
-}
-
-/* BONUS */
-
-.bonus{
-    padding:16px;
-    border-radius:19px;
-    background:
-      linear-gradient(135deg,rgba(255,190,45,.12),rgba(125,55,230,.14));
-    border:1px solid rgba(255,210,80,.14);
-}
-
-.bonus-row{
-    display:flex;
-    align-items:center;
-    gap:13px;
-}
-
-.bonus-icon{
-    width:52px;
-    height:52px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    border-radius:15px;
-    background:linear-gradient(135deg,#c98a20,#7f42c9);
-    font-size:26px;
-}
-
-.bonus-title{
-    font-weight:900;
-    font-size:15px;
-}
-
-.bonus-desc{
-    margin-top:4px;
-    color:var(--muted);
-    font-size:10px;
-}
-
-.bonus-button{
-    width:100%;
-    margin-top:13px;
-    padding:11px;
-    border-radius:12px;
-    background:linear-gradient(135deg,#e4a92c,#8c49dc);
-    font-weight:800;
-    font-size:12px;
-}
-
-/* LEADERBOARD */
-
-.leaderboard{
-    background:var(--card);
-    border-radius:18px;
-    border:1px solid var(--border);
-    overflow:hidden;
-}
-
-.leader{
-    display:flex;
-    align-items:center;
-    padding:12px 13px;
-    border-bottom:1px solid rgba(255,255,255,.05);
-}
-
-.leader:last-child{
-    border-bottom:0;
-}
-
-.rank{
-    width:30px;
-    font-weight:900;
-    color:#9b9fb1;
-}
-
-.rank.gold{
-    color:var(--gold);
+.sub{
+  font-size:11px;
+  color:var(--muted);
+  margin-top:3px;
 }
 
 .avatar{
-    width:34px;
-    height:34px;
-    border-radius:50%;
-    background:linear-gradient(135deg,#6535bf,#e0a831);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    margin-right:10px;
+  width:43px;
+  height:43px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(135deg,#733be0,#222653);
+  font-size:22px;
 }
 
-.leader-info{
-    flex:1;
+.notice{
+  margin-top:14px;
+  padding:11px 14px;
+  border:1px solid #8b4dff33;
+  border-radius:15px;
+  background:#111428;
+  overflow:hidden;
 }
 
-.leader-name{
-    font-size:12px;
-    font-weight:800;
+.ticker{
+  white-space:nowrap;
+  color:#cdd0db;
+  font-size:12px;
+  animation:t 15s linear infinite;
 }
 
-.leader-coins{
-    font-size:10px;
-    color:var(--muted);
-    margin-top:3px;
+@keyframes t{
+  from{transform:translateX(100%)}
+  to{transform:translateX(-120%)}
 }
 
-.leader-prize{
-    color:var(--gold);
-    font-size:11px;
-    font-weight:800;
+.balance{
+  margin-top:15px;
+  padding:20px;
+  border-radius:25px;
+  background:linear-gradient(
+    135deg,
+    #5822b7,
+    #9b48e5 55%,
+    #d89c3b
+  );
+  box-shadow:0 15px 45px #5421a844;
 }
 
-/* MODAL */
-
-.modal{
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.72);
-    display:none;
-    align-items:flex-end;
-    justify-content:center;
-    z-index:100;
-    backdrop-filter:blur(5px);
+.lbl{
+  font-size:12px;
+  opacity:.85;
 }
 
-.modal.show{
-    display:flex;
+.money{
+  font-size:36px;
+  font-weight:900;
+  margin-top:4px;
 }
 
-.modal-box{
-    width:100%;
-    max-width:700px;
-    max-height:90vh;
-    overflow-y:auto;
-    background:#101326;
-    border-radius:25px 25px 0 0;
-    padding:20px 16px 30px;
-    border-top:1px solid rgba(255,255,255,.10);
+.coins{
+  margin-top:9px;
+  font-size:13px;
 }
 
-.modal-head{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:15px;
+.actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:17px;
 }
 
-.modal-title{
-    font-size:19px;
-    font-weight:900;
+.btn{
+  padding:12px;
+  border-radius:12px;
+  background:#0003;
+  border:1px solid #ffffff22;
+  color:#fff;
+  font-weight:800;
 }
 
-.close{
-    width:34px;
-    height:34px;
-    border-radius:50%;
-    background:#20243a;
-    color:#bbb;
+.sec{
+  margin-top:22px;
+  padding:0 16px;
 }
 
-/* DEPOSIT */
-
-.amount-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:9px;
+.head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:12px;
 }
 
-.amount{
-    padding:13px 5px;
-    border-radius:12px;
-    background:#171a2e;
-    border:1px solid var(--border);
-    color:#c8cad4;
-    font-size:12px;
-    font-weight:800;
+.title{
+  font-size:18px;
+  font-weight:900;
 }
 
-.amount.selected{
-    border-color:var(--purple2);
-    background:rgba(139,77,255,.18);
-    color:white;
+.link{
+  font-size:11px;
+  color:var(--purple2);
 }
 
-.input{
-    width:100%;
-    margin-top:12px;
-    padding:13px;
-    border-radius:11px;
-    outline:none;
-    border:1px solid var(--border);
-    background:#0b0e1d;
-    color:white;
+.quick{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:9px;
 }
 
-.primary{
-    width:100%;
-    margin-top:12px;
-    padding:13px;
-    border-radius:12px;
-    background:linear-gradient(135deg,#7140db,#a855e8);
-    font-size:13px;
-    font-weight:900;
+.q{
+  background:var(--card);
+  border:1px solid #fff0f1;
+  border-radius:16px;
+  text-align:center;
+  padding:13px 4px;
 }
 
-.info{
-    margin-top:12px;
-    padding:12px;
-    border-radius:11px;
-    background:#171a2d;
-    color:#9fa4b8;
-    font-size:10px;
-    line-height:1.6;
+.qi{
+  font-size:22px;
 }
 
-/* PROFILE */
-
-.profile-card{
-    text-align:center;
-    padding:20px;
-    border-radius:19px;
-    background:var(--card);
-    border:1px solid var(--border);
+.qn{
+  font-size:10px;
+  color:#c7cad5;
+  margin-top:7px;
 }
 
-.profile-avatar{
-    width:75px;
-    height:75px;
-    margin:auto;
-    border-radius:50%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:35px;
-    background:linear-gradient(135deg,#7540da,#e0a62f);
+.cats{
+  display:flex;
+  gap:8px;
+  overflow:auto;
+  padding-bottom:5px;
 }
 
-.profile-name{
-    margin-top:10px;
-    font-weight:900;
+.cat{
+  white-space:nowrap;
+  border:1px solid #fff1;
+  background:var(--card);
+  color:#aeb3c5;
+  border-radius:20px;
+  padding:8px 13px;
+  font-size:11px;
 }
 
-.profile-id{
-    margin-top:5px;
-    color:var(--muted);
-    font-size:11px;
+.cat.active{
+  background:linear-gradient(135deg,#713de0,#ae54ef);
+  color:#fff;
+  border:0;
 }
 
-.profile-list{
-    margin-top:13px;
+.games{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:11px;
+  margin-top:12px;
 }
 
-.profile-item{
-    display:flex;
-    justify-content:space-between;
-    padding:13px;
-    border-bottom:1px solid rgba(255,255,255,.05);
-    font-size:12px;
+.game{
+  min-height:150px;
+  position:relative;
+  background:linear-gradient(145deg,#171a31,#101222);
+  border:1px solid #fff1;
+  border-radius:19px;
+  padding:13px;
+  overflow:hidden;
 }
 
-.profile-item span:last-child{
-    color:#c2c5d2;
+.gi{
+  width:52px;
+  height:52px;
+  border-radius:15px;
+  background:linear-gradient(135deg,#281557,#8d4bdb);
+  display:grid;
+  place-items:center;
+  font-size:28px;
 }
 
-/* BOTTOM NAV */
-
-.bottom-nav{
-    position:fixed;
-    left:0;
-    right:0;
-    bottom:0;
-    height:76px;
-    z-index:90;
-    display:flex;
-    align-items:center;
-    justify-content:space-around;
-    background:rgba(10,12,25,.96);
-    border-top:1px solid rgba(255,255,255,.08);
-    backdrop-filter:blur(15px);
+.tag{
+  position:absolute;
+  right:11px;
+  top:11px;
+  background:#ff526b22;
+  color:#ff7180;
+  border-radius:8px;
+  padding:5px 7px;
+  font-size:9px;
+  font-weight:800;
 }
 
-.nav-item{
-    width:25%;
-    text-align:center;
-    color:#73798f;
-    font-size:9px;
+.gn{
+  font-size:14px;
+  font-weight:900;
+  margin-top:12px;
 }
 
-.nav-icon{
-    font-size:21px;
-    margin-bottom:4px;
+.gd{
+  font-size:10px;
+  color:var(--muted);
+  margin-top:4px;
 }
 
-.nav-item.active{
-    color:#c17aff;
+.play{
+  position:absolute;
+  left:13px;
+  right:13px;
+  bottom:11px;
+  padding:9px;
+  border:0;
+  border-radius:11px;
+  background:linear-gradient(135deg,#6d38d7,#ac51e9);
+  color:#fff;
+  font-weight:900;
 }
 
-.nav-item.active .nav-icon{
-    filter:drop-shadow(0 0 7px rgba(190,100,255,.5));
+.bonus{
+  background:linear-gradient(135deg,#d49a2b18,#8747f522);
+  border:1px solid #ffd34d22;
+  border-radius:19px;
+  padding:16px;
 }
 
-/* TOAST */
-
-.toast{
-    position:fixed;
-    left:50%;
-    bottom:90px;
-    transform:translateX(-50%) translateY(20px);
-    width:calc(100% - 35px);
-    max-width:450px;
-    padding:13px 15px;
-    border-radius:13px;
-    background:#22263b;
-    border:1px solid rgba(255,255,255,.10);
-    color:white;
-    text-align:center;
-    font-size:12px;
-    opacity:0;
-    pointer-events:none;
-    transition:.25s;
-    z-index:200;
+.bonusrow{
+  display:flex;
+  gap:13px;
+  align-items:center;
 }
 
-.toast.show{
-    opacity:1;
-    transform:translateX(-50%) translateY(0);
+.bi{
+  width:52px;
+  height:52px;
+  border-radius:15px;
+  background:linear-gradient(135deg,#c98b22,#7e43c9);
+  display:grid;
+  place-items:center;
+  font-size:25px;
 }
 
-/* PAGE */
+.bd{
+  font-size:10px;
+  color:var(--muted);
+  margin-top:4px;
+}
+
+.full{
+  width:100%;
+  margin-top:13px;
+  padding:12px;
+  border:0;
+  border-radius:12px;
+  background:linear-gradient(135deg,#e3a72d,#8d49df);
+  color:#fff;
+  font-weight:900;
+}
+
+.lead{
+  background:var(--card);
+  border:1px solid #fff1;
+  border-radius:18px;
+  overflow:hidden;
+}
+
+.row{
+  display:flex;
+  align-items:center;
+  padding:12px;
+  border-bottom:1px solid #fff0;
+}
+
+.row:last-child{
+  border:0;
+}
+
+.rank{
+  width:28px;
+  color:#aaa;
+  font-weight:900;
+}
+
+.rank.gold{
+  color:var(--gold);
+}
+
+.ra{
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#6936bf,#dfa72f);
+  display:grid;
+  place-items:center;
+  margin-right:10px;
+}
+
+.li{
+  flex:1;
+}
+
+.ln{
+  font-size:12px;
+  font-weight:800;
+}
+
+.lc{
+  font-size:10px;
+  color:var(--muted);
+  margin-top:3px;
+}
+
+.pr{
+  color:var(--gold);
+  font-size:12px;
+}
 
 .page{
-    display:none;
+  display:none;
 }
 
 .page.active{
-    display:block;
+  display:block;
 }
 
-/* RESPONSIVE */
+.modal{
+  position:fixed;
+  inset:0;
+  background:#000b;
+  display:none;
+  align-items:flex-end;
+  z-index:100;
+  backdrop-filter:blur(6px);
+}
+
+.modal.show{
+  display:flex;
+}
+
+.box{
+  width:100%;
+  max-width:700px;
+  max-height:90vh;
+  overflow:auto;
+  background:#101326;
+  border-radius:25px 25px 0 0;
+  padding:20px 16px 30px;
+  border-top:1px solid #fff2;
+}
+
+.mh{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:15px;
+}
+
+.mt{
+  font-size:19px;
+  font-weight:900;
+}
+
+.close{
+  width:35px;
+  height:35px;
+  border:0;
+  border-radius:50%;
+  background:#22263b;
+  color:#ddd;
+  font-size:18px;
+}
+
+.amounts{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:9px;
+}
+
+.amt{
+  padding:13px 5px;
+  border:1px solid #fff1;
+  border-radius:12px;
+  background:#171a2e;
+  color:#ddd;
+  font-weight:900;
+}
+
+.amt.sel{
+  border-color:var(--purple2);
+  background:#8747f52b;
+  color:#fff;
+}
+
+.input{
+  width:100%;
+  margin-top:12px;
+  padding:13px;
+  border-radius:11px;
+  border:1px solid #fff1;
+  background:#090c1a;
+  color:#fff;
+  outline:0;
+}
+
+.info{
+  margin-top:12px;
+  padding:12px;
+  border-radius:12px;
+  background:#181b30;
+  color:#aeb3c5;
+  font-size:11px;
+  line-height:1.6;
+}
+
+.profile{
+  background:var(--card);
+  border:1px solid #fff1;
+  border-radius:19px;
+  text-align:center;
+  padding:20px;
+}
+
+.pa{
+  width:75px;
+  height:75px;
+  margin:auto;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(135deg,#7540da,#dfa62e);
+  font-size:35px;
+}
+
+.pn{
+  font-weight:900;
+  margin-top:10px;
+}
+
+.pid{
+  font-size:11px;
+  color:var(--muted);
+  margin-top:5px;
+}
+
+.nav{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  height:76px;
+  background:#0a0d1bf5;
+  border-top:1px solid #fff1;
+  display:flex;
+  z-index:90;
+  backdrop-filter:blur(15px);
+}
+
+.ni{
+  width:25%;
+  text-align:center;
+  color:#73798f;
+  font-size:9px;
+  padding-top:10px;
+}
+
+.nicon{
+  font-size:21px;
+  margin-bottom:4px;
+}
+
+.ni.active{
+  color:#c17aff;
+}
+
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:90px;
+  transform:translate(-50%,20px);
+  width:calc(100% - 35px);
+  max-width:450px;
+  padding:13px;
+  border-radius:13px;
+  background:#24283c;
+  text-align:center;
+  font-size:12px;
+  opacity:0;
+  pointer-events:none;
+  transition:.25s;
+  z-index:200;
+}
+
+.toast.show{
+  opacity:1;
+  transform:translate(-50%,0);
+}
 
 @media(max-width:360px){
-    .quick-grid{
-        grid-template-columns:repeat(2,1fr);
-    }
+  .quick{
+    grid-template-columns:repeat(2,1fr);
+  }
 
-    .game-grid{
-        grid-template-columns:1fr;
-    }
+  .games{
+    grid-template-columns:1fr;
+  }
 
-    .amount-grid{
-        grid-template-columns:repeat(2,1fr);
-    }
+  .amounts{
+    grid-template-columns:repeat(2,1fr);
+  }
 }
 </style>
 </head>
@@ -773,72 +587,53 @@ button{
 
 <div class="app">
 
-<!-- ================= HOME ================= -->
-
+<!-- HOME -->
 <main id="home" class="page active">
 
-<header class="header">
+<header>
 
-<div class="topbar">
+<div class="top">
 
 <div class="brand">
 
 <div class="logo">💰</div>
 
 <div>
-<div class="brand-name">BDT CASH</div>
-<div class="brand-sub">Play • Rewards • Community</div>
+<div class="bn">BDT CASH</div>
+<div class="sub">Play • Rewards • Community</div>
 </div>
 
 </div>
 
-<div class="profile-mini" onclick="openPage('profile')">
-👤
-</div>
+<div class="avatar">👤</div>
 
 </div>
 
 <div class="notice">
-<span class="notice-icon">📢</span>
-<div class="notice-track">
-<div class="notice-text">
-Welcome to BDT CASH • Check daily bonus • Invite friends • Enjoy the platform
-</div>
+<div class="ticker">
+📢 Welcome to BDT CASH • Daily Bonus • Referral Rewards • New Games Coming Soon
 </div>
 </div>
 
-<div class="balance-card">
+<div class="balance">
 
-<div class="balance-label">
-Available Balance
+<div class="lbl">Available Balance</div>
+
+<div class="money">
+৳ <span id="money">0.00</span>
 </div>
 
-<div class="balance-row">
-
-<div>
-<span class="balance">৳ <span id="money">0.00</span></span>
+<div class="coins">
+🪙 <b id="coins">0</b> Coins
 </div>
 
-<div class="currency">
-BDT
-</div>
+<div class="actions">
 
-</div>
-
-<div class="coin-row">
-<span class="coin">🪙</span>
-<span><b id="coins">0</b> Coins</span>
-</div>
-
-<div class="balance-actions">
-
-<button class="balance-btn"
-onclick="openDeposit()">
+<button class="btn" onclick="openDeposit()">
 💳 Deposit
 </button>
 
-<button class="balance-btn"
-onclick="showToast('Withdraw feature requires a verified backend.')">
+<button class="btn" onclick="openWithdraw()">
 💸 Withdraw
 </button>
 
@@ -849,206 +644,83 @@ onclick="showToast('Withdraw feature requires a verified backend.')">
 </header>
 
 
-<!-- QUICK ACTIONS -->
+<section class="sec">
 
-<section class="section">
-
-<div class="section-head">
-<div class="section-title">Quick Access</div>
+<div class="head">
+<div class="title">Quick Access</div>
 </div>
 
-<div class="quick-grid">
+<div class="quick">
 
-<div class="quick" onclick="openDeposit()">
-<div class="quick-icon">💳</div>
-<div class="quick-name">Deposit</div>
+<div class="q" onclick="openDeposit()">
+<div class="qi">💳</div>
+<div class="qn">Deposit</div>
 </div>
 
-<div class="quick" onclick="showToast('Daily bonus is ready for the next backend step.')">
-<div class="quick-icon">🎁</div>
-<div class="quick-name">Daily Bonus</div>
+<div class="q" onclick="claim()">
+<div class="qi">🎁</div>
+<div class="qn">Daily Bonus</div>
 </div>
 
-<div class="quick" onclick="openPage('profile')">
-<div class="quick-icon">👥</div>
-<div class="quick-name">Referral</div>
+<div class="q" onclick="openPage('profile')">
+<div class="qi">👥</div>
+<div class="qn">Referral</div>
 </div>
 
-<div class="quick" onclick="openPage('leaderboard')">
-<div class="quick-icon">🏆</div>
-<div class="quick-name">Ranking</div>
+<div class="q" onclick="openPage('leaderboard')">
+<div class="qi">🏆</div>
+<div class="qn">Ranking</div>
 </div>
 
 </div>
+</section>
+
+
+<section class="sec">
+
+<div class="head">
+
+<div class="title">
+🔥 Featured Games
+</div>
+
+<div class="link" onclick="openPage('games')">
+View all
+</div>
+
+</div>
+
+<div class="cats">
+
+<button class="cat active">All</button>
+<button class="cat">Featured</button>
+<button class="cat">Arcade</button>
+<button class="cat">Sports</button>
+<button class="cat">Cards</button>
+<button class="cat">Board</button>
+
+</div>
+
+<div class="games" id="homeGames"></div>
 
 </section>
 
 
-<!-- GAMES -->
-
-<section class="section">
-
-<div class="section-head">
-<div class="section-title">🔥 Featured Games</div>
-<div class="section-link">View all</div>
-</div>
-
-<div class="categories">
-
-<button class="category active">All</button>
-<button class="category">Featured</button>
-<button class="category">Arcade</button>
-<button class="category">Sports</button>
-<button class="category">Cards</button>
-<button class="category">Board</button>
-
-</div>
-
-<div class="game-grid">
-
-<div class="game">
-<div class="game-top">
-<div class="game-icon">🚀</div>
-<div class="hot">HOT</div>
-</div>
-<div class="game-name">Live Crash</div>
-<div class="game-desc">Featured game</div>
-<button class="play" onclick="gameInfo('Live Crash')">Open</button>
-</div>
-
-
-<div class="game">
-<div class="game-top">
-<div class="game-icon">🎡</div>
-<div class="hot">LIVE</div>
-</div>
-<div class="game-name">Crazy Time</div>
-<div class="game-desc">Live style game</div>
-<button class="play" onclick="gameInfo('Crazy Time')">Open</button>
-</div>
-
-
-<div class="game">
-<div class="game-top">
-<div class="game-icon">🃏</div>
-<div class="hot">LIVE</div>
-</div>
-<div class="game-name">Teen Patti Live</div>
-<div class="game-desc">Card game</div>
-<button class="play" onclick="gameInfo('Teen Patti Live')">Open</button>
-</div>
-
-
-<div class="game">
-<div class="game-top">
-<div class="game-icon">🎰</div>
-</div>
-<div class="game-name">Slots</div>
-<div class="game-desc">Arcade style</div>
-<button class="play" onclick="gameInfo('Slots')">Open</button>
-</div>
-
-
-<div class="game">
-<div class="game-top">
-<div class="game-icon">🎲</div>
-</div>
-<div class="game-name">Dice</div>
-<div class="game-desc">Quick game</div>
-<button class="play" onclick="gameInfo('Dice')">Open</button>
-</div>
-
-
-<div class="game">
-<div class="game-top">
-<div class="game-icon">🎯</div>
-</div>
-<div class="game-name">Target</div>
-<div class="game-desc">Arcade</div>
-<button class="play" onclick="gameInfo('Target')">Open</button>
-</div>
-
-
-<div class="game">
-<div class="game-top">
-<div class="game-icon">🧩</div>
-</div>
-<div class="game-name">Puzzle</div>
-<div class="game-desc">Brain game</div>
-<button class="play" onclick="gameInfo('Puzzle')">Open</button>
-</div>
-
-
-<div class="game">
-<div class="game-top">
-<div class="game-icon">🏎️</div>
-</div>
-<div class="game-name">Racing</div>
-<div class="game-desc">Sports</div>
-<button class="play" onclick="gameInfo('Racing')">Open</button>
-</div>
-
-
-<div class="game">
-<div class="game-top">
-<div class="game-icon">⚽</div>
-</div>
-<div class="game-name">Football</div>
-<div class="game-desc">Sports</div>
-<button class="play" onclick="gameInfo('Football')">Open</button>
-</div>
-
-
-<div class="game">
-<div class="game-top">
-<div class="game-icon">🎲</div>
-</div>
-<div class="game-name">Ludo</div>
-<div class="game-desc">Board game</div>
-<button class="play" onclick="gameInfo('Ludo')">Open</button>
-</div>
-
-
-<div class="game">
-<div class="game-top">
-<div class="game-icon">🪙</div>
-</div>
-<div class="game-name">Coin Catch</div>
-<div class="game-desc">Arcade</div>
-<button class="play" onclick="gameInfo('Coin Catch')">Open</button>
-</div>
-
-
-<div class="game">
-<div class="game-top">
-<div class="game-icon">🗼</div>
-</div>
-<div class="game-name">Tower Game</div>
-<div class="game-desc">Arcade</div>
-<button class="play" onclick="gameInfo('Tower Game')">Open</button>
-</div>
-
-</div>
-
-</section>
-
-
-<!-- DAILY BONUS -->
-
-<section class="section">
+<section class="sec">
 
 <div class="bonus">
 
-<div class="bonus-row">
+<div class="bonusrow">
 
-<div class="bonus-icon">🎁</div>
+<div class="bi">🎁</div>
 
 <div>
-<div class="bonus-title">
+
+<div class="title" style="font-size:15px">
 Daily Check-in Bonus
 </div>
 
-<div class="bonus-desc">
+<div class="bd">
 Come back every day and claim your reward.
 </div>
 
@@ -1056,8 +728,7 @@ Come back every day and claim your reward.
 
 </div>
 
-<button class="bonus-button"
-onclick="claimBonus()">
+<button class="full" onclick="claim()">
 🎁 Claim Daily Bonus
 </button>
 
@@ -1066,158 +737,96 @@ onclick="claimBonus()">
 </section>
 
 
-<!-- LEADERBOARD -->
+<section class="sec">
 
-<section class="section">
-
-<div class="section-head">
-<div class="section-title">🏆 Top Players</div>
-<div class="section-link"
-onclick="openPage('leaderboard')">
-See all
-</div>
+<div class="head">
+<div class="title">🏆 Top Players</div>
 </div>
 
-<div class="leaderboard">
+<div class="lead">
 
-<div class="leader">
-
+<div class="row">
 <div class="rank gold">1</div>
-
-<div class="avatar">👑</div>
-
-<div class="leader-info">
-<div class="leader-name">Top Player</div>
-<div class="leader-coins">12,500 Coins</div>
+<div class="ra">👑</div>
+<div class="li">
+<div class="ln">Top Player</div>
+<div class="lc">12,500 Coins</div>
+</div>
+<div class="pr">🥇</div>
 </div>
 
-<div class="leader-prize">🥇</div>
-
-</div>
-
-
-<div class="leader">
-
+<div class="row">
 <div class="rank">2</div>
-
-<div class="avatar">🔥</div>
-
-<div class="leader-info">
-<div class="leader-name">Lucky Player</div>
-<div class="leader-coins">9,850 Coins</div>
+<div class="ra">🔥</div>
+<div class="li">
+<div class="ln">Lucky Player</div>
+<div class="lc">9,850 Coins</div>
+</div>
+<div class="pr">🥈</div>
 </div>
 
-<div class="leader-prize">🥈</div>
-
-</div>
-
-
-<div class="leader">
-
+<div class="row">
 <div class="rank">3</div>
-
-<div class="avatar">⭐</div>
-
-<div class="leader-info">
-<div class="leader-name">Star Player</div>
-<div class="leader-coins">8,200 Coins</div>
+<div class="ra">⭐</div>
+<div class="li">
+<div class="ln">Star Player</div>
+<div class="lc">8,200 Coins</div>
 </div>
-
-<div class="leader-prize">🥉</div>
-
+<div class="pr">🥉</div>
 </div>
 
 </div>
-
 </section>
 
 </main>
 
 
-<!-- ================= GAMES PAGE ================= -->
-
+<!-- GAMES -->
 <main id="games" class="page">
 
-<section class="section" style="padding-top:20px">
+<section class="sec" style="padding-top:20px">
 
-<div class="section-title">
+<div class="title">
 🎮 All Games
 </div>
 
-<div class="game-grid">
-
-<div class="game"><div class="game-icon">🚀</div><div class="game-name">Live Crash</div><button class="play" onclick="gameInfo('Live Crash')">Open</button></div>
-
-<div class="game"><div class="game-icon">🎡</div><div class="game-name">Crazy Time</div><button class="play" onclick="gameInfo('Crazy Time')">Open</button></div>
-
-<div class="game"><div class="game-icon">🃏</div><div class="game-name">3 Patti Live</div><button class="play" onclick="gameInfo('3 Patti Live')">Open</button></div>
-
-<div class="game"><div class="game-icon">🕉️</div><div class="game-name">Ganesh Game</div><button class="play" onclick="gameInfo('Ganesh Game')">Open</button></div>
-
-<div class="game"><div class="game-icon">🎲</div><div class="game-name">Dice</div><button class="play" onclick="gameInfo('Dice')">Open</button></div>
-
-<div class="game"><div class="game-icon">🎡</div><div class="game-name">Spin Wheel</div><button class="play" onclick="gameInfo('Spin Wheel')">Open</button></div>
-
-<div class="game"><div class="game-icon">🎯</div><div class="game-name">Target</div><button class="play" onclick="gameInfo('Target')">Open</button></div>
-
-<div class="game"><div class="game-icon">🧩</div><div class="game-name">Puzzle</div><button class="play" onclick="gameInfo('Puzzle')">Open</button></div>
-
-<div class="game"><div class="game-icon">🧱</div><div class="game-name">Brick Breaker</div><button class="play" onclick="gameInfo('Brick Breaker')">Open</button></div>
-
-<div class="game"><div class="game-icon">🏃</div><div class="game-name">Runner</div><button class="play" onclick="gameInfo('Runner')">Open</button></div>
-
-<div class="game"><div class="game-icon">💣</div><div class="game-name">Mines</div><button class="play" onclick="gameInfo('Mines')">Open</button></div>
-
-<div class="game"><div class="game-icon">🪙</div><div class="game-name">Coin Catch</div><button class="play" onclick="gameInfo('Coin Catch')">Open</button></div>
-
-<div class="game"><div class="game-icon">🗼</div><div class="game-name">Tower Game</div><button class="play" onclick="gameInfo('Tower Game')">Open</button></div>
-
-<div class="game"><div class="game-icon">🏎️</div><div class="game-name">Racing</div><button class="play" onclick="gameInfo('Racing')">Open</button></div>
-
-<div class="game"><div class="game-icon">🏀</div><div class="game-name">Basketball</div><button class="play" onclick="gameInfo('Basketball')">Open</button></div>
-
-<div class="game"><div class="game-icon">🃏</div><div class="game-name">Rummy</div><button class="play" onclick="gameInfo('Rummy')">Open</button></div>
-
-</div>
+<div class="games" id="allGames"></div>
 
 </section>
 
 </main>
 
 
-<!-- ================= WALLET PAGE ================= -->
-
+<!-- WALLET -->
 <main id="wallet" class="page">
 
-<section class="section" style="padding-top:20px">
+<section class="sec" style="padding-top:20px">
 
-<div class="section-title">💰 My Wallet</div>
+<div class="title">
+💰 My Wallet
+</div>
 
-<div class="balance-card">
+<div class="balance">
 
-<div class="balance-label">
+<div class="lbl">
 Available Balance
 </div>
 
-<div class="balance-row">
-<div class="balance">
+<div class="money">
 ৳ <span id="money2">0.00</span>
 </div>
-</div>
 
-<div class="coin-row">
+<div class="coins">
 🪙 <b id="coins2">0</b> Coins
 </div>
 
-<div class="balance-actions">
+<div class="actions">
 
-<button class="balance-btn"
-onclick="openDeposit()">
+<button class="btn" onclick="openDeposit()">
 💳 Deposit
 </button>
 
-<button class="balance-btn"
-onclick="showToast('Withdraw requires compliant backend setup.')">
+<button class="btn" onclick="openWithdraw()">
 💸 Withdraw
 </button>
 
@@ -1225,18 +834,8 @@ onclick="showToast('Withdraw requires compliant backend setup.')">
 
 </div>
 
-
-<div class="panel" style="margin-top:15px">
-
-<div class="section-title"
-style="font-size:15px">
-Transaction History
-</div>
-
 <div class="info">
-No transactions yet.
-</div>
-
+Transaction history will appear here after secure backend integration.
 </div>
 
 </section>
@@ -1244,64 +843,55 @@ No transactions yet.
 </main>
 
 
-<!-- ================= LEADERBOARD PAGE ================= -->
-
+<!-- LEADERBOARD -->
 <main id="leaderboard" class="page">
 
-<section class="section" style="padding-top:20px">
+<section class="sec" style="padding-top:20px">
 
-<div class="section-title">🏆 Leaderboard</div>
+<div class="title">
+🏆 Leaderboard
+</div>
 
-<div class="leaderboard" style="margin-top:15px">
+<div class="lead" style="margin-top:15px">
 
-<div class="leader">
+<div class="row">
 <div class="rank gold">1</div>
-<div class="avatar">👑</div>
-<div class="leader-info">
-<div class="leader-name">Top Player</div>
-<div class="leader-coins">12,500 Coins</div>
+<div class="ra">👑</div>
+<div class="li">
+<div class="ln">Top Player</div>
+<div class="lc">12,500 Coins</div>
 </div>
-<div class="leader-prize">🥇</div>
+<div class="pr">🥇</div>
 </div>
 
-<div class="leader">
+<div class="row">
 <div class="rank">2</div>
-<div class="avatar">🔥</div>
-<div class="leader-info">
-<div class="leader-name">Lucky Player</div>
-<div class="leader-coins">9,850 Coins</div>
+<div class="ra">🔥</div>
+<div class="li">
+<div class="ln">Lucky Player</div>
+<div class="lc">9,850 Coins</div>
 </div>
-<div class="leader-prize">🥈</div>
+<div class="pr">🥈</div>
 </div>
 
-<div class="leader">
+<div class="row">
 <div class="rank">3</div>
-<div class="avatar">⭐</div>
-<div class="leader-info">
-<div class="leader-name">Star Player</div>
-<div class="leader-coins">8,200 Coins</div>
+<div class="ra">⭐</div>
+<div class="li">
+<div class="ln">Star Player</div>
+<div class="lc">8,200 Coins</div>
 </div>
-<div class="leader-prize">🥉</div>
+<div class="pr">🥉</div>
 </div>
 
-<div class="leader">
+<div class="row">
 <div class="rank">4</div>
-<div class="avatar">💎</div>
-<div class="leader-info">
-<div class="leader-name">Diamond</div>
-<div class="leader-coins">7,650 Coins</div>
+<div class="ra">💎</div>
+<div class="li">
+<div class="ln">Diamond</div>
+<div class="lc">7,650 Coins</div>
 </div>
-<div class="leader-prize">🏅</div>
-</div>
-
-<div class="leader">
-<div class="rank">5</div>
-<div class="avatar">⚡</div>
-<div class="leader-info">
-<div class="leader-name">Fast Player</div>
-<div class="leader-coins">6,400 Coins</div>
-</div>
-<div class="leader-prize">🏅</div>
+<div class="pr">🏅</div>
 </div>
 
 </div>
@@ -1311,64 +901,49 @@ No transactions yet.
 </main>
 
 
-<!-- ================= PROFILE ================= -->
-
+<!-- PROFILE -->
 <main id="profile" class="page">
 
-<section class="section" style="padding-top:20px">
+<section class="sec" style="padding-top:20px">
 
-<div class="profile-card">
+<div class="profile">
 
-<div class="profile-avatar">👤</div>
+<div class="pa">
+👤
+</div>
 
-<div class="profile-name" id="profileName">
+<div class="pn" id="profileName">
 Telegram User
 </div>
 
-<div class="profile-id">
-User ID: <span id="telegramId">—</span>
+<div class="pid">
+User ID: <span id="uid">—</span>
 </div>
 
 </div>
 
 
-<div class="panel" style="margin-top:15px">
+<div class="info">
 
-<div class="profile-list">
+<b>Referral Code:</b>
+<span id="ref">BDTCASH</span>
 
-<div class="profile-item">
-<span>🪙 Coins</span>
-<span id="profileCoins">0</span>
-</div>
+<br><br>
 
-<div class="profile-item">
-<span>💰 Balance</span>
-<span>৳ 0.00</span>
-</div>
+<b>Referral reward:</b>
+150 Coins for an eligible referred-user 1,000-coin deposit.
 
-<div class="profile-item">
-<span>👥 Referral Code</span>
-<span id="refCode">BDTCASH</span>
-</div>
+<br><br>
 
-<div class="profile-item">
-<span>🎁 First Deposit Bonus</span>
-<span>50%</span>
-</div>
-
-<div class="profile-item">
-<span>🏆 Referral Reward</span>
-<span>150 Coins</span>
-</div>
+<b>First deposit bonus:</b>
+50% on an eligible first successful deposit.
 
 </div>
 
-<button class="primary"
-onclick="copyReferral()">
+
+<button class="full" onclick="copyRef()">
 📋 Copy Referral Code
 </button>
-
-</div>
 
 </section>
 
@@ -1377,45 +952,44 @@ onclick="copyReferral()">
 </div>
 
 
-<!-- ================= BOTTOM NAV ================= -->
+<!-- BOTTOM NAV -->
+<nav class="nav">
 
-<nav class="bottom-nav">
-
-<div class="nav-item active"
-data-page="home"
+<div class="ni active"
+data-p="home"
 onclick="openPage('home')">
 
-<div class="nav-icon">🏠</div>
+<div class="nicon">🏠</div>
 Home
 
 </div>
 
 
-<div class="nav-item"
-data-page="games"
+<div class="ni"
+data-p="games"
 onclick="openPage('games')">
 
-<div class="nav-icon">🎮</div>
+<div class="nicon">🎮</div>
 Games
 
 </div>
 
 
-<div class="nav-item"
-data-page="wallet"
+<div class="ni"
+data-p="wallet"
 onclick="openPage('wallet')">
 
-<div class="nav-icon">💰</div>
+<div class="nicon">💰</div>
 Wallet
 
 </div>
 
 
-<div class="nav-item"
-data-page="profile"
+<div class="ni"
+data-p="profile"
 onclick="openPage('profile')">
 
-<div class="nav-icon">👤</div>
+<div class="nicon">👤</div>
 Profile
 
 </div>
@@ -1423,100 +997,71 @@ Profile
 </nav>
 
 
-<!-- ================= DEPOSIT MODAL ================= -->
+<!-- DEPOSIT MODAL -->
 
 <div class="modal" id="depositModal">
 
-<div class="modal-box">
+<div class="box">
 
-<div class="modal-head">
+<div class="mh">
 
-<div class="modal-title">
+<div class="mt">
 💳 Deposit Coins
 </div>
 
 <button class="close"
-onclick="closeDeposit()">
+onclick="closeM('depositModal')">
 ✕
 </button>
 
 </div>
 
-<div class="info"
-style="margin-top:0">
-Choose a coin amount below. This screen is a frontend prototype; no real payment is processed here.
+
+<div class="info" style="margin-top:0">
+
+Select a coin amount.
+
+This is a frontend prototype; no real payment is processed here.
+
 </div>
 
-<div class="amount-grid"
+
+<div class="amounts"
+id="depAmounts"
 style="margin-top:13px">
-
-<button class="amount"
-onclick="selectAmount(this,100)">
-100
-</button>
-
-<button class="amount"
-onclick="selectAmount(this,200)">
-200
-</button>
-
-<button class="amount"
-onclick="selectAmount(this,500)">
-500
-</button>
-
-<button class="amount"
-onclick="selectAmount(this,1000)">
-1,000
-</button>
-
-<button class="amount"
-onclick="selectAmount(this,2000)">
-2,000
-</button>
-
-<button class="amount"
-onclick="selectAmount(this,5000)">
-5,000
-</button>
-
-<button class="amount"
-onclick="selectAmount(this,10000)">
-10,000
-</button>
-
-<button class="amount"
-onclick="selectAmount(this,20000)">
-20,000
-</button>
-
-<button class="amount"
-onclick="selectAmount(this,30000)">
-30,000
-</button>
-
 </div>
+
 
 <div class="info">
 
-🎁 <b>First Deposit Bonus</b><br>
-The planned reward rule is 50% on the first successful deposit. Actual crediting must be performed by a secure backend after verification.
+🎁 <b>First Deposit Bonus 50%</b>
 
-<br><br>
+<br>
 
-👥 <b>Referral Reward</b><br>
-The planned referral rule is 150 coins when an eligible referred user completes a 1,000-coin deposit.
+Referral rule:
+
+Eligible referred user deposits 1,000 coins
+→ referrer reward 150 coins.
+
+<br>
+
+Actual crediting must be verified by a secure backend.
 
 </div>
 
+
 <input
 class="input"
-id="paymentRef"
-placeholder="Payment reference / transaction ID">
+id="depRef"
+placeholder="Payment reference / transaction ID"
+>
 
-<button class="primary"
+
+<button class="full"
 onclick="submitDeposit()">
+
 Submit Deposit Request
+
 </button>
 
 </div>
@@ -1524,368 +1069,581 @@ Submit Deposit Request
 </div>
 
 
-<!-- ================= TOAST ================= -->
+<!-- WITHDRAW MODAL -->
+
+<div class="modal" id="withdrawModal">
+
+<div class="box">
+
+<div class="mh">
+
+<div class="mt">
+💸 Withdraw Coins
+</div>
+
+<button class="close"
+onclick="closeM('withdrawModal')">
+✕
+</button>
+
+</div>
+
+
+<div class="info" style="margin-top:0">
+
+Choose the withdrawal amount you want to request.
+
+</div>
+
+
+<div class="amounts"
+id="withAmounts"
+style="margin-top:13px">
+</div>
+
+
+<input
+class="input"
+id="method"
+placeholder="Withdrawal method (e.g. bKash/Nagad)"
+>
+
+
+<input
+class="input"
+id="withdrawRef"
+placeholder="Account/number"
+>
+
+
+<button class="full"
+onclick="submitWithdraw()">
+
+Submit Withdrawal Request
+
+</button>
+
+
+<div class="info">
+
+Withdrawal requests must be processed and verified by the secure backend.
+
+Do not put payment credentials or secrets in this HTML file.
+
+</div>
+
+</div>
+
+</div>
+
 
 <div class="toast" id="toast"></div>
 
 
 <script>
 
-/* ==========================================
-   TELEGRAM
-========================================== */
-
-const tg = window.Telegram && window.Telegram.WebApp
-    ? window.Telegram.WebApp
-    : null;
+const tg =
+window.Telegram?.WebApp || null;
 
 if(tg){
-    tg.ready();
-    tg.expand();
 
-    try{
-        tg.setHeaderColor("#090b18");
-        tg.setBackgroundColor("#090b18");
-    }catch(e){}
+  tg.ready();
+
+  tg.expand();
+
+  try{
+
+    tg.setHeaderColor("#090b18");
+    tg.setBackgroundColor("#090b18");
+
+  }catch(e){}
+
 }
 
 
-/* ==========================================
-   DEMO STATE
-========================================== */
+const amounts = [
+  100,
+  200,
+  500,
+  1000,
+  2000,
+  5000,
+  10000,
+  20000,
+  30000
+];
 
-let selectedAmount = 0;
 
-let state = {
-    coins: 0,
-    money: 0,
-    dailyClaimed: false,
-    referralCode: "BDTCASH"
-};
+const games = [
+
+["🚀","Live Crash","Featured","HOT"],
+
+["🎡","Crazy Time","Live style","LIVE"],
+
+["🃏","Teen Patti Live","Card","LIVE"],
+
+["🃏","3 Patti Live","Card","LIVE"],
+
+["🧂","Salt Game","Featured","HOT"],
+
+["🕉️","Ganesh Game","Arcade",""],
+
+["🎰","Slots","Arcade",""],
+
+["🎲","Dice","Quick game",""],
+
+["🎡","Spin Wheel","Arcade",""],
+
+["🎯","Target","Arcade",""],
+
+["🧩","Puzzle","Brain game",""],
+
+["🧱","Brick Breaker","Arcade",""],
+
+["🏃","Runner","Arcade",""],
+
+["💣","Mines","Arcade",""],
+
+["🪙","Coin Catch","Arcade",""],
+
+["🗼","Tower Game","Arcade",""],
+
+["🏎️","Racing","Sports",""],
+
+["⚽","Football","Sports",""],
+
+["🏀","Basketball","Sports",""],
+
+["🎲","Ludo","Board",""],
+
+["🃏","Teen Patti","Cards",""],
+
+["🃏","3 Patti","Cards",""],
+
+["🃏","Rummy","Cards",""],
+
+["🎴","Andar Bahar","Cards",""],
+
+["🟩","Baccarat","Cards",""],
+
+["🎣","Ice Fishing","Arcade","NEW"],
+
+["💵","Money Game","Arcade","NEW"],
+
+["🌸","Flower Spin","Arcade","NEW"],
+
+["🥊","Boxing Game","Sports","NEW"],
+
+["⚡","Turbo Game","Arcade","NEW"],
+
+["🛸","Flying Game","Arcade",""]
+
+];
 
 
-/* ==========================================
-   TELEGRAM USER
-========================================== */
+function renderGames(id,limit){
 
-function loadTelegramUser(){
+  const el =
+  document.getElementById(id);
 
-    if(!tg || !tg.initDataUnsafe){
-        return;
+  el.innerHTML =
+  games
+  .slice(0,limit || games.length)
+  .map(g => `
+
+  <div class="game">
+
+    <div class="gi">
+      ${g[0]}
+    </div>
+
+    ${
+      g[3]
+      ?
+      `<div class="tag">${g[3]}</div>`
+      :
+      ""
     }
 
-    const user = tg.initDataUnsafe.user;
+    <div class="gn">
+      ${g[1]}
+    </div>
 
-    if(!user){
-        return;
-    }
+    <div class="gd">
+      ${g[2]}
+    </div>
 
-    let name =
-        user.first_name ||
-        "Telegram User";
+    <button
+      class="play"
+      onclick="gameInfo('${g[1]}')">
 
-    if(user.last_name){
-        name += " " + user.last_name;
-    }
+      Open
 
-    document.getElementById("profileName").textContent = name;
+    </button>
 
-    document.getElementById("telegramId").textContent =
-        user.id || "—";
+  </div>
 
-    if(user.username){
-        state.referralCode =
-            "BDT_" + String(user.id).slice(-6);
+  `)
+  .join("");
 
-        document.getElementById("refCode").textContent =
-            state.referralCode;
-    }
 }
 
 
-/* ==========================================
-   PAGE NAVIGATION
-========================================== */
+renderGames("homeGames",8);
 
-function openPage(page){
+renderGames("allGames");
 
-    document.querySelectorAll(".page")
-        .forEach(function(p){
-            p.classList.remove("active");
-        });
 
-    const target =
-        document.getElementById(page);
+let dep = 0;
 
-    if(target){
-        target.classList.add("active");
-    }
+let wd = 0;
 
-    document.querySelectorAll(".nav-item")
-        .forEach(function(item){
+let claimed = false;
 
-            item.classList.remove("active");
 
-            if(item.dataset.page === page){
-                item.classList.add("active");
-            }
+function renderAmounts(id,fn){
 
-        });
+  document.getElementById(id).innerHTML =
 
-    window.scrollTo({
-        top:0,
-        behavior:"smooth"
-    });
+  amounts
+  .map(a => `
+
+  <button
+    class="amt"
+    onclick="${fn}(${a},this)">
+
+    ${a.toLocaleString()}
+
+  </button>
+
+  `)
+  .join("");
+
 }
 
 
-/* ==========================================
-   BALANCE
-========================================== */
+renderAmounts(
+  "depAmounts",
+  "pickDep"
+);
 
-function updateBalance(){
+renderAmounts(
+  "withAmounts",
+  "pickWd"
+);
 
-    document.getElementById("coins").textContent =
-        state.coins.toLocaleString();
 
-    document.getElementById("coins2").textContent =
-        state.coins.toLocaleString();
+function pickDep(a,b){
 
-    document.getElementById("money").textContent =
-        state.money.toFixed(2);
+  dep = a;
 
-    document.getElementById("money2").textContent =
-        state.money.toFixed(2);
+  document
+  .querySelectorAll("#depAmounts .amt")
+  .forEach(x =>
+    x.classList.remove("sel")
+  );
 
-    document.getElementById("profileCoins").textContent =
-        state.coins.toLocaleString();
+  b.classList.add("sel");
+
 }
 
 
-/* ==========================================
-   DEPOSIT
-========================================== */
+function pickWd(a,b){
+
+  wd = a;
+
+  document
+  .querySelectorAll("#withAmounts .amt")
+  .forEach(x =>
+    x.classList.remove("sel")
+  );
+
+  b.classList.add("sel");
+
+}
+
 
 function openDeposit(){
 
-    document
-        .getElementById("depositModal")
-        .classList.add("show");
+  document
+  .getElementById("depositModal")
+  .classList.add("show");
+
 }
 
-function closeDeposit(){
 
-    document
-        .getElementById("depositModal")
-        .classList.remove("show");
+function openWithdraw(){
+
+  document
+  .getElementById("withdrawModal")
+  .classList.add("show");
+
 }
 
-function selectAmount(button, amount){
 
-    selectedAmount = amount;
+function closeM(id){
 
-    document.querySelectorAll(".amount")
-        .forEach(function(btn){
-            btn.classList.remove("selected");
-        });
+  document
+  .getElementById(id)
+  .classList.remove("show");
 
-    button.classList.add("selected");
 }
+
 
 function submitDeposit(){
 
-    if(selectedAmount === 0){
+  if(!dep){
 
-        showToast(
-            "Please select a coin amount first."
-        );
-
-        return;
-    }
-
-    const reference =
-        document.getElementById("paymentRef").value.trim();
-
-    if(reference.length < 3){
-
-        showToast(
-            "Please enter a payment reference."
-        );
-
-        return;
-    }
-
-    /*
-      IMPORTANT:
-      This prototype deliberately does NOT
-      credit coins or process real payments.
-
-      A production implementation must send
-      this request to a secure backend, where
-      payment verification, wallet ledger,
-      first-deposit bonus and referral reward
-      are handled server-side.
-    */
-
-    closeDeposit();
-
-    document.getElementById("paymentRef").value = "";
-
-    showToast(
-        "Deposit request created for backend verification."
+    return toast(
+      "Select a deposit amount first."
     );
 
-    selectedAmount = 0;
-
-    document.querySelectorAll(".amount")
-        .forEach(function(btn){
-            btn.classList.remove("selected");
-        });
-}
+  }
 
 
-/* ==========================================
-   DAILY BONUS
-========================================== */
+  if(
+    document
+    .getElementById("depRef")
+    .value
+    .trim()
+    .length < 3
+  ){
 
-function claimBonus(){
-
-    if(state.dailyClaimed){
-
-        showToast(
-            "Daily bonus already claimed."
-        );
-
-        return;
-    }
-
-    state.dailyClaimed = true;
-
-    showToast(
-        "Daily bonus will be connected to the backend."
+    return toast(
+      "Enter a payment reference."
     );
+
+  }
+
+
+  closeM("depositModal");
+
+  toast(
+    "Deposit request sent for backend verification."
+  );
+
 }
 
 
-/* ==========================================
-   GAME
-========================================== */
+function submitWithdraw(){
 
-function gameInfo(name){
+  if(!wd){
 
-    showToast(
-        name +
-        " is currently a UI prototype."
+    return toast(
+      "Select a withdrawal amount first."
     );
+
+  }
+
+
+  if(
+
+    document
+    .getElementById("method")
+    .value
+    .trim()
+    .length < 2
+
+    ||
+
+    document
+    .getElementById("withdrawRef")
+    .value
+    .trim()
+    .length < 3
+
+  ){
+
+    return toast(
+      "Enter withdrawal method and account."
+    );
+
+  }
+
+
+  closeM("withdrawModal");
+
+  toast(
+    "Withdrawal request sent for backend verification."
+  );
+
 }
 
 
-/* ==========================================
-   REFERRAL
-========================================== */
+function claim(){
 
-function copyReferral(){
+  if(claimed){
 
-    const code =
-        state.referralCode;
+    return toast(
+      "Daily bonus already claimed."
+    );
 
-    if(navigator.clipboard){
+  }
 
-        navigator.clipboard
-            .writeText(code)
-            .then(function(){
+  claimed = true;
 
-                showToast(
-                    "Referral code copied."
-                );
+  toast(
+    "Daily bonus will be connected to the secure backend."
+  );
 
-            })
-            .catch(function(){
-
-                showToast(
-                    "Referral code: " + code
-                );
-
-            });
-
-    }else{
-
-        showToast(
-            "Referral code: " + code
-        );
-    }
 }
 
 
-/* ==========================================
-   TOAST
-========================================== */
+function gameInfo(n){
 
-let toastTimer;
+  toast(
+    n + " is currently a UI prototype."
+  );
 
-function showToast(message){
-
-    const toast =
-        document.getElementById("toast");
-
-    toast.textContent = message;
-
-    toast.classList.add("show");
-
-    clearTimeout(toastTimer);
-
-    toastTimer =
-        setTimeout(function(){
-
-            toast.classList.remove("show");
-
-        },3000);
 }
 
 
-/* ==========================================
-   CATEGORY BUTTONS
-========================================== */
+function openPage(p){
 
-document.querySelectorAll(".category")
-.forEach(function(button){
-
-    button.addEventListener("click",function(){
-
-        document.querySelectorAll(".category")
-            .forEach(function(btn){
-                btn.classList.remove("active");
-            });
-
-        this.classList.add("active");
-
-    });
-
-});
+  document
+  .querySelectorAll(".page")
+  .forEach(x =>
+    x.classList.remove("active")
+  );
 
 
-/* ==========================================
-   MODAL BACKDROP
-========================================== */
+  document
+  .getElementById(p)
+  .classList.add("active");
+
+
+  document
+  .querySelectorAll(".ni")
+  .forEach(x =>
+    x.classList.toggle(
+      "active",
+      x.dataset.p === p
+    )
+  );
+
+
+  scrollTo(0,0);
+
+}
+
+
+function toast(m){
+
+  const x =
+  document.getElementById("toast");
+
+  x.textContent = m;
+
+  x.classList.add("show");
+
+  clearTimeout(window.tt);
+
+  window.tt =
+  setTimeout(
+    () =>
+      x.classList.remove("show"),
+    2800
+  );
+
+}
+
+
+function copyRef(){
+
+  const r =
+  document.getElementById("ref")
+  .textContent;
+
+
+  navigator
+  .clipboard
+  ?.writeText(r)
+
+  .then(() =>
+    toast("Referral code copied.")
+  )
+
+  .catch(() =>
+    toast("Referral code: " + r)
+  );
+
+}
+
+
+if(
+  tg?.initDataUnsafe?.user
+){
+
+  const u =
+  tg.initDataUnsafe.user;
+
+
+  document
+  .getElementById("profileName")
+  .textContent =
+
+  [
+    u.first_name,
+    u.last_name
+  ]
+  .filter(Boolean)
+  .join(" ")
+
+  || "Telegram User";
+
+
+  document
+  .getElementById("uid")
+  .textContent =
+  u.id || "—";
+
+
+  document
+  .getElementById("ref")
+  .textContent =
+  "BDT_" +
+  String(u.id).slice(-6);
+
+}
+
 
 document
-    .getElementById("depositModal")
-    .addEventListener("click",function(e){
+.querySelectorAll(".modal")
+.forEach(m =>
 
-        if(e.target === this){
-            closeDeposit();
-        }
+  m.addEventListener(
+    "click",
+    e => {
 
-    });
+      if(e.target === m){
+
+        m.classList.remove("show");
+
+      }
+
+    }
+  )
+
+);
 
 
-/* ==========================================
-   START
-========================================== */
+document
+.querySelectorAll(".cat")
+.forEach(c =>
 
-loadTelegramUser();
+  c.onclick = () => {
 
-updateBalance();
+    document
+    .querySelectorAll(".cat")
+    .forEach(x =>
+      x.classList.remove("active")
+    );
+
+    c.classList.add("active");
+
+  }
+
+);
 
 </script>
 
