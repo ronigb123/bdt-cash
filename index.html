@@ -2,583 +2,395 @@
 <html lang="bn">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<meta name="theme-color" content="#090b18">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#09091a">
 <title>BDT CASH</title>
 
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
 <style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-  -webkit-tap-highlight-color:transparent;
-}
-
-:root{
-  --bg:#080a17;
-  --card:#121529;
-  --card2:#181c32;
-  --purple:#8747f5;
-  --purple2:#bd61ff;
-  --gold:#ffd34d;
-  --muted:#9298ad;
-  --green:#35d07f;
-}
-
+*{box-sizing:border-box;margin:0;padding:0}
 body{
-  background:
-    radial-gradient(circle at 20% 0,#55209a44,transparent 34%),
-    radial-gradient(circle at 100% 20%,#d49a2b22,transparent 30%),
-    var(--bg);
-  color:#fff;
   font-family:Arial,sans-serif;
+  background:#080817;
+  color:#fff;
   min-height:100vh;
 }
+button,input{font:inherit}
+button{cursor:pointer}
 
 .app{
-  max-width:700px;
+  max-width:720px;
   margin:auto;
+  min-height:100vh;
   padding-bottom:90px;
+  background:
+    radial-gradient(circle at 20% 0%,#35125c55,transparent 35%),
+    radial-gradient(circle at 100% 20%,#8c2ed333,transparent 35%),
+    #080817;
 }
 
 header{
-  padding:18px 16px 0;
-}
-
-.top{
+  padding:20px 18px 12px;
   display:flex;
-  justify-content:space-between;
   align-items:center;
+  justify-content:space-between;
 }
-
 .brand{
   display:flex;
-  gap:10px;
   align-items:center;
+  gap:12px;
 }
-
 .logo{
-  width:46px;
-  height:46px;
-  border-radius:15px;
-  background:linear-gradient(135deg,#8c49ff,#ffd34d);
-  display:grid;
-  place-items:center;
-  font-size:25px;
+  width:58px;
+  height:58px;
+  border-radius:18px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:30px;
+  background:linear-gradient(135deg,#702cff,#ffbf36);
+  box-shadow:0 8px 30px #7c2cff55;
 }
+.brand h1{font-size:25px}
+.brand p{color:#aaa;font-size:13px;margin-top:4px}
 
-.bn{
-  font-size:20px;
-  font-weight:900;
-}
-
-.sub{
-  font-size:11px;
-  color:var(--muted);
-  margin-top:3px;
-}
-
-.avatar{
-  width:43px;
-  height:43px;
+.profile{
+  width:48px;height:48px;
   border-radius:50%;
-  display:grid;
-  place-items:center;
-  background:linear-gradient(135deg,#733be0,#222653);
-  font-size:22px;
+  background:linear-gradient(135deg,#4d18a8,#2020a8);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:25px;
+  border:1px solid #7849e8;
 }
 
 .notice{
-  margin-top:14px;
-  padding:11px 14px;
-  border:1px solid #8b4dff33;
-  border-radius:15px;
-  background:#111428;
+  margin:8px 18px 18px;
+  height:55px;
+  border:1px solid #4b267b;
+  border-radius:18px;
+  background:#111126;
+  display:flex;
+  align-items:center;
+  padding:0 15px;
   overflow:hidden;
 }
-
-.ticker{
+.notice span{
   white-space:nowrap;
-  color:#cdd0db;
-  font-size:12px;
-  animation:t 15s linear infinite;
+  animation:move 12s linear infinite;
+  color:#ddd;
 }
-
-@keyframes t{
+@keyframes move{
   from{transform:translateX(100%)}
-  to{transform:translateX(-120%)}
+  to{transform:translateX(-100%)}
 }
 
 .balance{
-  margin-top:15px;
-  padding:20px;
-  border-radius:25px;
-  background:linear-gradient(
-    135deg,
-    #5822b7,
-    #9b48e5 55%,
-    #d89c3b
-  );
-  box-shadow:0 15px 45px #5421a844;
+  margin:0 18px 24px;
+  padding:25px;
+  border-radius:35px;
+  background:linear-gradient(135deg,#6d2be2,#a847e8,#c36b96);
+  box-shadow:0 15px 40px #752bd744;
+  position:relative;
+  overflow:hidden;
 }
-
-.lbl{
-  font-size:12px;
-  opacity:.85;
+.balance:after{
+  content:"";
+  position:absolute;
+  width:180px;height:180px;
+  border-radius:50%;
+  right:-70px;top:-70px;
+  background:#fff2;
 }
-
-.money{
-  font-size:36px;
-  font-weight:900;
-  margin-top:4px;
+.balance small{color:#eee;font-size:15px}
+.amount{
+  font-size:43px;
+  font-weight:bold;
+  margin:8px 0 15px;
 }
-
 .coins{
-  margin-top:9px;
-  font-size:13px;
+  font-size:17px;
+  margin-bottom:20px;
 }
-
-.actions{
+.walletBtns{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:10px;
-  margin-top:17px;
+  gap:12px;
 }
-
-.btn{
-  padding:12px;
-  border-radius:12px;
-  background:#0003;
-  border:1px solid #ffffff22;
-  color:#fff;
-  font-weight:800;
-}
-
-.sec{
-  margin-top:22px;
-  padding:0 16px;
-}
-
-.head{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:12px;
-}
-
-.title{
-  font-size:18px;
-  font-weight:900;
-}
-
-.link{
-  font-size:11px;
-  color:var(--purple2);
-}
-
-.quick{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:9px;
-}
-
-.q{
-  background:var(--card);
-  border:1px solid #fff0f1;
-  border-radius:16px;
-  text-align:center;
-  padding:13px 4px;
-}
-
-.qi{
-  font-size:22px;
-}
-
-.qn{
-  font-size:10px;
-  color:#c7cad5;
-  margin-top:7px;
-}
-
-.cats{
-  display:flex;
-  gap:8px;
-  overflow:auto;
-  padding-bottom:5px;
-}
-
-.cat{
-  white-space:nowrap;
-  border:1px solid #fff1;
-  background:var(--card);
-  color:#aeb3c5;
-  border-radius:20px;
-  padding:8px 13px;
-  font-size:11px;
-}
-
-.cat.active{
-  background:linear-gradient(135deg,#713de0,#ae54ef);
-  color:#fff;
+.walletBtns button{
   border:0;
-}
-
-.games{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:11px;
-  margin-top:12px;
-}
-
-.game{
-  min-height:150px;
-  position:relative;
-  background:linear-gradient(145deg,#171a31,#101222);
-  border:1px solid #fff1;
-  border-radius:19px;
-  padding:13px;
-  overflow:hidden;
-}
-
-.gi{
-  width:52px;
-  height:52px;
-  border-radius:15px;
-  background:linear-gradient(135deg,#281557,#8d4bdb);
-  display:grid;
-  place-items:center;
-  font-size:28px;
-}
-
-.tag{
-  position:absolute;
-  right:11px;
-  top:11px;
-  background:#ff526b22;
-  color:#ff7180;
-  border-radius:8px;
-  padding:5px 7px;
-  font-size:9px;
-  font-weight:800;
-}
-
-.gn{
-  font-size:14px;
-  font-weight:900;
-  margin-top:12px;
-}
-
-.gd{
-  font-size:10px;
-  color:var(--muted);
-  margin-top:4px;
-}
-
-.play{
-  position:absolute;
-  left:13px;
-  right:13px;
-  bottom:11px;
-  padding:9px;
-  border:0;
-  border-radius:11px;
-  background:linear-gradient(135deg,#6d38d7,#ac51e9);
-  color:#fff;
-  font-weight:900;
-}
-
-.bonus{
-  background:linear-gradient(135deg,#d49a2b18,#8747f522);
-  border:1px solid #ffd34d22;
-  border-radius:19px;
-  padding:16px;
-}
-
-.bonusrow{
-  display:flex;
-  gap:13px;
-  align-items:center;
-}
-
-.bi{
-  width:52px;
-  height:52px;
-  border-radius:15px;
-  background:linear-gradient(135deg,#c98b22,#7e43c9);
-  display:grid;
-  place-items:center;
-  font-size:25px;
-}
-
-.bd{
-  font-size:10px;
-  color:var(--muted);
-  margin-top:4px;
-}
-
-.full{
-  width:100%;
-  margin-top:13px;
-  padding:12px;
-  border:0;
-  border-radius:12px;
-  background:linear-gradient(135deg,#e3a72d,#8d49df);
-  color:#fff;
-  font-weight:900;
-}
-
-.lead{
-  background:var(--card);
-  border:1px solid #fff1;
   border-radius:18px;
-  overflow:hidden;
+  padding:14px 8px;
+  color:#fff;
+  font-weight:bold;
+  background:#35175f99;
 }
 
-.row{
-  display:flex;
-  align-items:center;
-  padding:12px;
-  border-bottom:1px solid #fff0;
+.section{
+  padding:0 18px;
+  margin-bottom:25px;
 }
-
-.row:last-child{
-  border:0;
-}
-
-.rank{
-  width:28px;
-  color:#aaa;
-  font-weight:900;
-}
-
-.rank.gold{
-  color:var(--gold);
-}
-
-.ra{
-  width:34px;
-  height:34px;
-  border-radius:50%;
-  background:linear-gradient(135deg,#6936bf,#dfa72f);
-  display:grid;
-  place-items:center;
-  margin-right:10px;
-}
-
-.li{
-  flex:1;
-}
-
-.ln{
-  font-size:12px;
-  font-weight:800;
-}
-
-.lc{
-  font-size:10px;
-  color:var(--muted);
-  margin-top:3px;
-}
-
-.pr{
-  color:var(--gold);
-  font-size:12px;
-}
-
-.page{
-  display:none;
-}
-
-.page.active{
-  display:block;
-}
-
-.modal{
-  position:fixed;
-  inset:0;
-  background:#000b;
-  display:none;
-  align-items:flex-end;
-  z-index:100;
-  backdrop-filter:blur(6px);
-}
-
-.modal.show{
-  display:flex;
-}
-
-.box{
-  width:100%;
-  max-width:700px;
-  max-height:90vh;
-  overflow:auto;
-  background:#101326;
-  border-radius:25px 25px 0 0;
-  padding:20px 16px 30px;
-  border-top:1px solid #fff2;
-}
-
-.mh{
+.sectionTitle{
   display:flex;
   justify-content:space-between;
   align-items:center;
   margin-bottom:15px;
 }
+.sectionTitle h2{font-size:23px}
+.sectionTitle span{color:#b879ff}
 
-.mt{
-  font-size:19px;
-  font-weight:900;
-}
-
-.close{
-  width:35px;
-  height:35px;
-  border:0;
-  border-radius:50%;
-  background:#22263b;
-  color:#ddd;
-  font-size:18px;
-}
-
-.amounts{
+.quick{
   display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:9px;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
 }
-
-.amt{
-  padding:13px 5px;
-  border:1px solid #fff1;
-  border-radius:12px;
-  background:#171a2e;
+.quick button{
+  border:1px solid #282848;
+  background:#111126;
   color:#ddd;
-  font-weight:900;
+  border-radius:18px;
+  padding:15px 4px;
 }
+.quick b{
+  display:block;
+  font-size:25px;
+  margin-bottom:8px;
+}
+.quick small{font-size:12px}
 
-.amt.sel{
-  border-color:var(--purple2);
-  background:#8747f52b;
+.categories{
+  display:flex;
+  gap:10px;
+  overflow-x:auto;
+  margin-bottom:15px;
+  scrollbar-width:none;
+}
+.categories button{
+  flex:none;
+  padding:11px 17px;
+  border-radius:25px;
+  border:1px solid #29294a;
+  background:#111126;
+  color:#aaa;
+}
+.categories button.active{
   color:#fff;
+  background:linear-gradient(90deg,#7130e5,#a23ff0);
+  border-color:#a75cff;
 }
 
-.input{
+.games{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:13px;
+}
+.game{
+  background:#111126;
+  border:1px solid #29294a;
+  border-radius:22px;
+  padding:11px;
+  overflow:hidden;
+}
+.gameImg{
+  height:130px;
+  border-radius:17px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:55px;
+  background:linear-gradient(135deg,#28135a,#7025a4);
+}
+.game h3{
+  margin:12px 4px 4px;
+  font-size:16px;
+}
+.game p{
+  color:#999;
+  font-size:12px;
+  margin:0 4px 10px;
+}
+.open{
   width:100%;
-  margin-top:12px;
-  padding:13px;
-  border-radius:11px;
-  border:1px solid #fff1;
-  background:#090c1a;
+  border:0;
+  border-radius:14px;
+  padding:11px;
   color:#fff;
-  outline:0;
+  font-weight:bold;
+  background:linear-gradient(90deg,#7130e5,#ae42ed);
+}
+
+.bottom{
+  position:fixed;
+  bottom:0;
+  left:50%;
+  transform:translateX(-50%);
+  width:100%;
+  max-width:720px;
+  height:76px;
+  background:#09091aee;
+  backdrop-filter:blur(15px);
+  border-top:1px solid #25253f;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  z-index:20;
+}
+.bottom button{
+  border:0;
+  background:transparent;
+  color:#777;
+}
+.bottom button.active{color:#b76cff}
+.bottom b{display:block;font-size:24px;margin-bottom:4px}
+.bottom small{font-size:11px}
+
+/* MODAL */
+.modal{
+  position:fixed;
+  inset:0;
+  background:#000b;
+  backdrop-filter:blur(7px);
+  display:none;
+  align-items:flex-end;
+  z-index:100;
+}
+.modal.show{display:flex}
+.sheet{
+  width:100%;
+  max-width:720px;
+  margin:auto;
+  max-height:90vh;
+  overflow-y:auto;
+  background:#101025;
+  border:1px solid #29294b;
+  border-radius:28px 28px 0 0;
+  padding:22px 18px 30px;
+}
+.sheetHead{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:18px;
+}
+.sheetHead h2{font-size:23px}
+.close{
+  width:43px;height:43px;
+  border:0;border-radius:50%;
+  background:#24243b;
+  color:#fff;
+  font-size:25px;
 }
 
 .info{
-  margin-top:12px;
-  padding:12px;
-  border-radius:12px;
-  background:#181b30;
-  color:#aeb3c5;
-  font-size:11px;
-  line-height:1.6;
+  padding:14px;
+  border-radius:16px;
+  background:#18182e;
+  color:#aaa;
+  line-height:1.5;
+  margin-bottom:16px;
 }
 
-.profile{
-  background:var(--card);
-  border:1px solid #fff1;
-  border-radius:19px;
-  text-align:center;
-  padding:20px;
-}
-
-.pa{
-  width:75px;
-  height:75px;
-  margin:auto;
-  border-radius:50%;
+.amountGrid{
   display:grid;
-  place-items:center;
-  background:linear-gradient(135deg,#7540da,#dfa62e);
-  font-size:35px;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+}
+.amountBtn{
+  padding:15px 5px;
+  border-radius:17px;
+  border:1px solid #29294b;
+  background:#16162c;
+  color:#ddd;
+  font-weight:bold;
+}
+.amountBtn.selected{
+  background:#42206e;
+  border-color:#a452f1;
+  color:#fff;
 }
 
-.pn{
-  font-weight:900;
-  margin-top:10px;
+.methods{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin:18px 0;
+}
+.method{
+  padding:15px;
+  border-radius:17px;
+  border:1px solid #29294b;
+  background:#16162c;
+  color:#ddd;
+}
+.method.selected{
+  border-color:#a452f1;
+  background:#342050;
 }
 
-.pid{
-  font-size:11px;
-  color:var(--muted);
-  margin-top:5px;
+input{
+  width:100%;
+  padding:16px;
+  border-radius:16px;
+  border:1px solid #29294b;
+  background:#080817;
+  color:#fff;
+  outline:none;
+  margin-bottom:12px;
+}
+.primary{
+  width:100%;
+  padding:16px;
+  border:0;
+  border-radius:17px;
+  background:linear-gradient(90deg,#7130e5,#ae42ed);
+  color:#fff;
+  font-weight:bold;
+  font-size:16px;
 }
 
-.nav{
-  position:fixed;
-  bottom:0;
-  left:0;
-  right:0;
-  height:76px;
-  background:#0a0d1bf5;
-  border-top:1px solid #fff1;
+.bonus{
+  margin:18px 0;
+  padding:16px;
+  background:#18182e;
+  border-radius:18px;
+  color:#bbb;
+  line-height:1.55;
+}
+.bonus strong{color:#fff}
+
+.profileBox{
+  text-align:center;
+  padding:15px;
+}
+.avatar{
+  width:80px;height:80px;
+  margin:0 auto 12px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#7130e5,#f1ae38);
   display:flex;
-  z-index:90;
-  backdrop-filter:blur(15px);
+  align-items:center;
+  justify-content:center;
+  font-size:40px;
 }
-
-.ni{
-  width:25%;
-  text-align:center;
-  color:#73798f;
-  font-size:9px;
-  padding-top:10px;
+.stat{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:18px;
 }
-
-.nicon{
-  font-size:21px;
-  margin-bottom:4px;
+.stat div{
+  background:#18182e;
+  padding:16px;
+  border-radius:17px;
 }
+.stat b{display:block;font-size:20px}
+.stat small{color:#999}
 
-.ni.active{
-  color:#c17aff;
-}
-
-.toast{
-  position:fixed;
-  left:50%;
-  bottom:90px;
-  transform:translate(-50%,20px);
-  width:calc(100% - 35px);
-  max-width:450px;
-  padding:13px;
-  border-radius:13px;
-  background:#24283c;
-  text-align:center;
-  font-size:12px;
-  opacity:0;
-  pointer-events:none;
-  transition:.25s;
-  z-index:200;
-}
-
-.toast.show{
-  opacity:1;
-  transform:translate(-50%,0);
-}
-
-@media(max-width:360px){
-  .quick{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .games{
-    grid-template-columns:1fr;
-  }
-
-  .amounts{
-    grid-template-columns:repeat(2,1fr);
-  }
+@media(max-width:380px){
+  .quick{grid-template-columns:repeat(2,1fr)}
+  .games{grid-template-columns:1fr}
+  .amountGrid{grid-template-columns:repeat(2,1fr)}
 }
 </style>
 </head>
@@ -587,1064 +399,439 @@ header{
 
 <div class="app">
 
-<!-- HOME -->
-<main id="home" class="page active">
-
 <header>
-
-<div class="top">
-
-<div class="brand">
-
-<div class="logo">💰</div>
-
-<div>
-<div class="bn">BDT CASH</div>
-<div class="sub">Play • Rewards • Community</div>
-</div>
-
-</div>
-
-<div class="avatar">👤</div>
-
-</div>
-
-<div class="notice">
-<div class="ticker">
-📢 Welcome to BDT CASH • Daily Bonus • Referral Rewards • New Games Coming Soon
-</div>
-</div>
-
-<div class="balance">
-
-<div class="lbl">Available Balance</div>
-
-<div class="money">
-৳ <span id="money">0.00</span>
-</div>
-
-<div class="coins">
-🪙 <b id="coins">0</b> Coins
-</div>
-
-<div class="actions">
-
-<button class="btn" onclick="openDeposit()">
-💳 Deposit
-</button>
-
-<button class="btn" onclick="openWithdraw()">
-💸 Withdraw
-</button>
-
-</div>
-
-</div>
-
+  <div class="brand">
+    <div class="logo">💰</div>
+    <div>
+      <h1>BDT CASH</h1>
+      <p>Play • Rewards • Community</p>
+    </div>
+  </div>
+  <div class="profile" onclick="openProfile()">👤</div>
 </header>
 
-
-<section class="sec">
-
-<div class="head">
-<div class="title">Quick Access</div>
+<div class="notice">
+  <span>📢 Welcome to BDT CASH • Play responsibly • New games & rewards coming soon</span>
 </div>
 
-<div class="quick">
+<section class="balance">
+  <small>Available Balance</small>
+  <div class="amount">৳ <span id="balance">0.00</span></div>
+  <div class="coins">🪙 <span id="coins">0</span> Coins</div>
 
-<div class="q" onclick="openDeposit()">
-<div class="qi">💳</div>
-<div class="qn">Deposit</div>
-</div>
-
-<div class="q" onclick="claim()">
-<div class="qi">🎁</div>
-<div class="qn">Daily Bonus</div>
-</div>
-
-<div class="q" onclick="openPage('profile')">
-<div class="qi">👥</div>
-<div class="qn">Referral</div>
-</div>
-
-<div class="q" onclick="openPage('leaderboard')">
-<div class="qi">🏆</div>
-<div class="qn">Ranking</div>
-</div>
-
-</div>
+  <div class="walletBtns">
+    <button onclick="openDeposit()">💳 Deposit</button>
+    <button onclick="openWithdraw()">💸 Withdraw</button>
+  </div>
 </section>
 
+<section class="section">
+  <div class="sectionTitle">
+    <h2>Quick Access</h2>
+  </div>
 
-<section class="sec">
-
-<div class="head">
-
-<div class="title">
-🔥 Featured Games
-</div>
-
-<div class="link" onclick="openPage('games')">
-View all
-</div>
-
-</div>
-
-<div class="cats">
-
-<button class="cat active">All</button>
-<button class="cat">Featured</button>
-<button class="cat">Arcade</button>
-<button class="cat">Sports</button>
-<button class="cat">Cards</button>
-<button class="cat">Board</button>
-
-</div>
-
-<div class="games" id="homeGames"></div>
-
+  <div class="quick">
+    <button onclick="openDeposit()"><b>💳</b><small>Deposit</small></button>
+    <button onclick="showBonus()"><b>🎁</b><small>Daily Bonus</small></button>
+    <button onclick="showReferral()"><b>👥</b><small>Referral</small></button>
+    <button onclick="showRanking()"><b>🏆</b><small>Ranking</small></button>
+  </div>
 </section>
 
+<section class="section">
+  <div class="sectionTitle">
+    <h2>🔥 Games</h2>
+    <span id="gameCount"></span>
+  </div>
 
-<section class="sec">
+  <div class="categories">
+    <button class="active" onclick="filterGames('all',this)">All</button>
+    <button onclick="filterGames('live',this)">Live</button>
+    <button onclick="filterGames('slots',this)">Slots</button>
+    <button onclick="filterGames('arcade',this)">Arcade</button>
+    <button onclick="filterGames('board',this)">Board</button>
+    <button onclick="filterGames('sports',this)">Sports</button>
+  </div>
 
-<div class="bonus">
-
-<div class="bonusrow">
-
-<div class="bi">🎁</div>
-
-<div>
-
-<div class="title" style="font-size:15px">
-Daily Check-in Bonus
-</div>
-
-<div class="bd">
-Come back every day and claim your reward.
-</div>
-
-</div>
-
-</div>
-
-<button class="full" onclick="claim()">
-🎁 Claim Daily Bonus
-</button>
-
-</div>
-
+  <div class="games" id="games"></div>
 </section>
 
-
-<section class="sec">
-
-<div class="head">
-<div class="title">🏆 Top Players</div>
 </div>
 
-<div class="lead">
-
-<div class="row">
-<div class="rank gold">1</div>
-<div class="ra">👑</div>
-<div class="li">
-<div class="ln">Top Player</div>
-<div class="lc">12,500 Coins</div>
-</div>
-<div class="pr">🥇</div>
-</div>
-
-<div class="row">
-<div class="rank">2</div>
-<div class="ra">🔥</div>
-<div class="li">
-<div class="ln">Lucky Player</div>
-<div class="lc">9,850 Coins</div>
-</div>
-<div class="pr">🥈</div>
-</div>
-
-<div class="row">
-<div class="rank">3</div>
-<div class="ra">⭐</div>
-<div class="li">
-<div class="ln">Star Player</div>
-<div class="lc">8,200 Coins</div>
-</div>
-<div class="pr">🥉</div>
-</div>
-
-</div>
-</section>
-
-</main>
-
-
-<!-- GAMES -->
-<main id="games" class="page">
-
-<section class="sec" style="padding-top:20px">
-
-<div class="title">
-🎮 All Games
-</div>
-
-<div class="games" id="allGames"></div>
-
-</section>
-
-</main>
-
-
-<!-- WALLET -->
-<main id="wallet" class="page">
-
-<section class="sec" style="padding-top:20px">
-
-<div class="title">
-💰 My Wallet
-</div>
-
-<div class="balance">
-
-<div class="lbl">
-Available Balance
-</div>
-
-<div class="money">
-৳ <span id="money2">0.00</span>
-</div>
-
-<div class="coins">
-🪙 <b id="coins2">0</b> Coins
-</div>
-
-<div class="actions">
-
-<button class="btn" onclick="openDeposit()">
-💳 Deposit
-</button>
-
-<button class="btn" onclick="openWithdraw()">
-💸 Withdraw
-</button>
-
-</div>
-
-</div>
-
-<div class="info">
-Transaction history will appear here after secure backend integration.
-</div>
-
-</section>
-
-</main>
-
-
-<!-- LEADERBOARD -->
-<main id="leaderboard" class="page">
-
-<section class="sec" style="padding-top:20px">
-
-<div class="title">
-🏆 Leaderboard
-</div>
-
-<div class="lead" style="margin-top:15px">
-
-<div class="row">
-<div class="rank gold">1</div>
-<div class="ra">👑</div>
-<div class="li">
-<div class="ln">Top Player</div>
-<div class="lc">12,500 Coins</div>
-</div>
-<div class="pr">🥇</div>
-</div>
-
-<div class="row">
-<div class="rank">2</div>
-<div class="ra">🔥</div>
-<div class="li">
-<div class="ln">Lucky Player</div>
-<div class="lc">9,850 Coins</div>
-</div>
-<div class="pr">🥈</div>
-</div>
-
-<div class="row">
-<div class="rank">3</div>
-<div class="ra">⭐</div>
-<div class="li">
-<div class="ln">Star Player</div>
-<div class="lc">8,200 Coins</div>
-</div>
-<div class="pr">🥉</div>
-</div>
-
-<div class="row">
-<div class="rank">4</div>
-<div class="ra">💎</div>
-<div class="li">
-<div class="ln">Diamond</div>
-<div class="lc">7,650 Coins</div>
-</div>
-<div class="pr">🏅</div>
-</div>
-
-</div>
-
-</section>
-
-</main>
-
-
-<!-- PROFILE -->
-<main id="profile" class="page">
-
-<section class="sec" style="padding-top:20px">
-
-<div class="profile">
-
-<div class="pa">
-👤
-</div>
-
-<div class="pn" id="profileName">
-Telegram User
-</div>
-
-<div class="pid">
-User ID: <span id="uid">—</span>
-</div>
-
-</div>
-
-
-<div class="info">
-
-<b>Referral Code:</b>
-<span id="ref">BDTCASH</span>
-
-<br><br>
-
-<b>Referral reward:</b>
-150 Coins for an eligible referred-user 1,000-coin deposit.
-
-<br><br>
-
-<b>First deposit bonus:</b>
-50% on an eligible first successful deposit.
-
-</div>
-
-
-<button class="full" onclick="copyRef()">
-📋 Copy Referral Code
-</button>
-
-</section>
-
-</main>
-
-</div>
-
-
-<!-- BOTTOM NAV -->
-<nav class="nav">
-
-<div class="ni active"
-data-p="home"
-onclick="openPage('home')">
-
-<div class="nicon">🏠</div>
-Home
-
-</div>
-
-
-<div class="ni"
-data-p="games"
-onclick="openPage('games')">
-
-<div class="nicon">🎮</div>
-Games
-
-</div>
-
-
-<div class="ni"
-data-p="wallet"
-onclick="openPage('wallet')">
-
-<div class="nicon">💰</div>
-Wallet
-
-</div>
-
-
-<div class="ni"
-data-p="profile"
-onclick="openPage('profile')">
-
-<div class="nicon">👤</div>
-Profile
-
-</div>
-
+<nav class="bottom">
+  <button class="active" onclick="home()"><b>🏠</b><small>Home</small></button>
+  <button onclick="scrollGames()"><b>🎮</b><small>Games</small></button>
+  <button onclick="openDeposit()"><b>💰</b><small>Wallet</small></button>
+  <button onclick="openProfile()"><b>👤</b><small>Profile</small></button>
 </nav>
 
 
-<!-- DEPOSIT MODAL -->
-
+<!-- DEPOSIT -->
 <div class="modal" id="depositModal">
+<div class="sheet">
 
-<div class="box">
-
-<div class="mh">
-
-<div class="mt">
-💳 Deposit Coins
+<div class="sheetHead">
+<h2>💳 Deposit Coins</h2>
+<button class="close" onclick="closeModal('depositModal')">×</button>
 </div>
-
-<button class="close"
-onclick="closeM('depositModal')">
-✕
-</button>
-
-</div>
-
-
-<div class="info" style="margin-top:0">
-
-Select a coin amount.
-
-This is a frontend prototype; no real payment is processed here.
-
-</div>
-
-
-<div class="amounts"
-id="depAmounts"
-style="margin-top:13px">
-</div>
-
 
 <div class="info">
+Choose a coin amount below.
+Select bKash or Nagad and submit your payment reference.
+</div>
 
-🎁 <b>First Deposit Bonus 50%</b>
+<div class="amountGrid" id="depositAmounts"></div>
 
-<br>
+<div class="bonus">
+🎁 <strong>First Deposit Bonus</strong><br>
+Your first successful deposit is eligible for a planned <strong>50% bonus</strong>.
+<br><br>
+👥 <strong>Referral Reward</strong><br>
+Eligible referral reward: <strong>150 coins</strong> when the referred user completes a 1,000-coin deposit.
+</div>
 
-Referral rule:
+<div class="methods">
+<button class="method selected" onclick="selectMethod(this)">💳 bKash</button>
+<button class="method" onclick="selectMethod(this)">💳 Nagad</button>
+</div>
 
-Eligible referred user deposits 1,000 coins
-→ referrer reward 150 coins.
+<input id="depositRef" placeholder="Payment reference / Transaction ID">
 
-<br>
+<button class="primary" onclick="submitDeposit()">Submit Deposit Request</button>
 
-Actual crediting must be verified by a secure backend.
-
+</div>
 </div>
 
 
-<input
-class="input"
-id="depRef"
-placeholder="Payment reference / transaction ID"
->
-
-
-<button class="full"
-onclick="submitDeposit()">
-
-Submit Deposit Request
-
-</button>
-
-</div>
-
-</div>
-
-
-<!-- WITHDRAW MODAL -->
-
+<!-- WITHDRAW -->
 <div class="modal" id="withdrawModal">
+<div class="sheet">
 
-<div class="box">
-
-<div class="mh">
-
-<div class="mt">
-💸 Withdraw Coins
+<div class="sheetHead">
+<h2>💸 Withdraw</h2>
+<button class="close" onclick="closeModal('withdrawModal')">×</button>
 </div>
-
-<button class="close"
-onclick="closeM('withdrawModal')">
-✕
-</button>
-
-</div>
-
-
-<div class="info" style="margin-top:0">
-
-Choose the withdrawal amount you want to request.
-
-</div>
-
-
-<div class="amounts"
-id="withAmounts"
-style="margin-top:13px">
-</div>
-
-
-<input
-class="input"
-id="method"
-placeholder="Withdrawal method (e.g. bKash/Nagad)"
->
-
-
-<input
-class="input"
-id="withdrawRef"
-placeholder="Account/number"
->
-
-
-<button class="full"
-onclick="submitWithdraw()">
-
-Submit Withdrawal Request
-
-</button>
-
 
 <div class="info">
+Select your withdrawal amount and payment method.
+</div>
 
-Withdrawal requests must be processed and verified by the secure backend.
+<div class="amountGrid" id="withdrawAmounts"></div>
 
-Do not put payment credentials or secrets in this HTML file.
+<div class="methods">
+<button class="method selected" onclick="selectMethod(this)">💳 bKash</button>
+<button class="method" onclick="selectMethod(this)">💳 Nagad</button>
+</div>
 
+<input id="withdrawNumber" placeholder="bKash / Nagad number">
+
+<button class="primary" onclick="submitWithdraw()">Submit Withdrawal Request</button>
+
+</div>
+</div>
+
+
+<!-- PROFILE -->
+<div class="modal" id="profileModal">
+<div class="sheet">
+
+<div class="sheetHead">
+<h2>👤 Profile</h2>
+<button class="close" onclick="closeModal('profileModal')">×</button>
+</div>
+
+<div class="profileBox">
+<div class="avatar">👤</div>
+<h2 id="userName">BDT CASH User</h2>
+<p style="color:#999;margin-top:5px">Telegram Mini App</p>
+
+<div class="stat">
+<div>
+<b id="profileCoins">0</b>
+<small>Coins</small>
+</div>
+<div>
+<b id="profileBalance">৳0.00</b>
+<small>Balance</small>
+</div>
+</div>
 </div>
 
 </div>
-
 </div>
 
 
-<div class="toast" id="toast"></div>
+<!-- SIMPLE INFO -->
+<div class="modal" id="infoModal">
+<div class="sheet">
+<div class="sheetHead">
+<h2 id="infoTitle">BDT CASH</h2>
+<button class="close" onclick="closeModal('infoModal')">×</button>
+</div>
+<div class="info" id="infoText"></div>
+</div>
+</div>
 
 
 <script>
-
-const tg =
-window.Telegram?.WebApp || null;
+const tg = window.Telegram && window.Telegram.WebApp;
 
 if(tg){
-
   tg.ready();
-
   tg.expand();
-
-  try{
-
-    tg.setHeaderColor("#090b18");
-    tg.setBackgroundColor("#090b18");
-
-  }catch(e){}
-
 }
 
-
-const amounts = [
-  100,
-  200,
-  500,
-  1000,
-  2000,
-  5000,
-  10000,
-  20000,
-  30000
-];
-
-
+/* Game catalogue */
 const games = [
+ {n:"Live Crash",i:"🚀",c:"live",d:"Live crash game"},
+ {n:"Crazy Time",i:"🎡",c:"live",d:"Live wheel game"},
+ {n:"Teen Patti Live",i:"🃏",c:"live",d:"Live card game"},
+ {n:"3 Patti Live",i:"♠️",c:"live",d:"Live 3 Patti"},
+ {n:"Salt Game",i:"🧂",c:"slots",d:"Slot style game"},
+ {n:"Ganesh Game",i:"🐘",c:"slots",d:"Ganesh themed game"},
 
-["🚀","Live Crash","Featured","HOT"],
+ {n:"Pirate Legends",i:"🏴‍☠️",c:"slots",d:"Adventure slots"},
+ {n:"Mega Bandit",i:"🤠",c:"slots",d:"Western slots"},
+ {n:"Dragon Gems Clash",i:"🐉",c:"slots",d:"Dragon gems"},
+ {n:"Royal Ace",i:"👑",c:"slots",d:"Royal slots"},
+ {n:"Dragon Gems Wheel",i:"🐲",c:"slots",d:"Wheel game"},
+ {n:"Goldminer",i:"⛏️",c:"slots",d:"Mining game"},
+ {n:"Crazy Money",i:"💰",c:"slots",d:"Money themed game"},
+ {n:"Sexy Joker",i:"🃏",c:"slots",d:"Joker game"},
+ {n:"Dragon Gems Super Buy",i:"🐉",c:"slots",d:"Dragon gems"},
+ {n:"Royal Hunter",i:"🏹",c:"slots",d:"Hunter game"},
+ {n:"Golden Aztec",i:"🏛️",c:"slots",d:"Aztec adventure"},
+ {n:"Super Egypt",i:"🔱",c:"slots",d:"Egypt game"},
+ {n:"Golden Ace",i:"✨",c:"slots",d:"Ace game"},
+ {n:"Magical Alchemist",i:"🧙",c:"slots",d:"Magic game"},
 
-["🎡","Crazy Time","Live style","LIVE"],
+ {n:"Super Ace",i:"👑",c:"slots",d:"Ace game"},
+ {n:"Aviator",i:"✈️",c:"live",d:"Flight game"},
+ {n:"Super Ace Deluxe",i:"👑",c:"slots",d:"Ace deluxe"},
+ {n:"Super Ace 2",i:"👑",c:"slots",d:"Ace game"},
+ {n:"Bounty Clash",i:"🤠",c:"slots",d:"Western game"},
+ {n:"Circus Joker",i:"🤡",c:"slots",d:"Circus game"},
+ {n:"Fortune Garuda",i:"🦅",c:"slots",d:"Fortune game"},
+ {n:"Super Elements",i:"🔥",c:"slots",d:"Elements game"},
+ {n:"Boxing King",i:"🥊",c:"sports",d:"Boxing game"},
+ {n:"Fortune Gems 3",i:"💎",c:"slots",d:"Gems game"},
+ {n:"Aztec",i:"🌴",c:"slots",d:"Aztec game"},
+ {n:"Magic Ace",i:"🪄",c:"slots",d:"Magic game"},
+ {n:"Anubis Wrath",i:"🐺",c:"slots",d:"Egypt game"},
+ {n:"Pinata Wins",i:"🎉",c:"slots",d:"Prize game"},
+ {n:"Chicken Road 2",i:"🐔",c:"arcade",d:"Arcade game"},
+ {n:"Money Coming",i:"💵",c:"slots",d:"Money game"},
+ {n:"Lucky Neko",i:"🐱",c:"slots",d:"Lucky game"},
+ {n:"Goldmine Express",i:"🚂",c:"slots",d:"Mining game"},
+ {n:"Chinese New Year",i:"🧧",c:"slots",d:"Festival game"},
+ {n:"Double Fortune",i:"🍀",c:"slots",d:"Fortune game"},
 
-["🃏","Teen Patti Live","Card","LIVE"],
+ {n:"Ludo",i:"🎲",c:"board",d:"Ludo game"},
+ {n:"Mines",i:"💣",c:"arcade",d:"Mines game"},
+ {n:"Ice Fishing",i:"🎣",c:"arcade",d:"Fishing game"},
+ {n:"Money Game",i:"💰",c:"arcade",d:"Money game"},
+ {n:"Fruit Spin",i:"🍉",c:"arcade",d:"Spin game"},
+ {n:"Boxing",i:"🥊",c:"sports",d:"Boxing game"},
+ {n:"Turbo Game",i:"🏎️",c:"sports",d:"Turbo racing"},
+ {n:"Spin Wheel",i:"🎡",c:"arcade",d:"Spin wheel"},
+ {n:"Target",i:"🎯",c:"arcade",d:"Target game"},
+ {n:"Puzzle",i:"🧩",c:"arcade",d:"Puzzle game"},
+ {n:"Brick Breaker",i:"🧱",c:"arcade",d:"Arcade game"},
+ {n:"Flying Game",i:"🛩️",c:"arcade",d:"Flying game"},
+ {n:"Runner",i:"🏃",c:"arcade",d:"Runner game"},
+ {n:"Coin Catch",i:"🪙",c:"arcade",d:"Coin game"},
+ {n:"Tower Game",i:"🗼",c:"arcade",d:"Tower game"},
 
-["🃏","3 Patti Live","Card","LIVE"],
-
-["🧂","Salt Game","Featured","HOT"],
-
-["🕉️","Ganesh Game","Arcade",""],
-
-["🎰","Slots","Arcade",""],
-
-["🎲","Dice","Quick game",""],
-
-["🎡","Spin Wheel","Arcade",""],
-
-["🎯","Target","Arcade",""],
-
-["🧩","Puzzle","Brain game",""],
-
-["🧱","Brick Breaker","Arcade",""],
-
-["🏃","Runner","Arcade",""],
-
-["💣","Mines","Arcade",""],
-
-["🪙","Coin Catch","Arcade",""],
-
-["🗼","Tower Game","Arcade",""],
-
-["🏎️","Racing","Sports",""],
-
-["⚽","Football","Sports",""],
-
-["🏀","Basketball","Sports",""],
-
-["🎲","Ludo","Board",""],
-
-["🃏","Teen Patti","Cards",""],
-
-["🃏","3 Patti","Cards",""],
-
-["🃏","Rummy","Cards",""],
-
-["🎴","Andar Bahar","Cards",""],
-
-["🟩","Baccarat","Cards",""],
-
-["🎣","Ice Fishing","Arcade","NEW"],
-
-["💵","Money Game","Arcade","NEW"],
-
-["🌸","Flower Spin","Arcade","NEW"],
-
-["🥊","Boxing Game","Sports","NEW"],
-
-["⚡","Turbo Game","Arcade","NEW"],
-
-["🛸","Flying Game","Arcade",""]
-
+ {n:"Football",i:"⚽",c:"sports",d:"Football game"},
+ {n:"Basketball",i:"🏀",c:"sports",d:"Basketball game"},
+ {n:"Racing",i:"🏎️",c:"sports",d:"Racing game"},
+ {n:"Quick Match",i:"⚡",c:"sports",d:"Quick match"},
+ {n:"Teen Patti",i:"🃏",c:"board",d:"Card game"},
+ {n:"3 Patti",i:"♠️",c:"board",d:"Card game"},
+ {n:"Rummy",i:"🃏",c:"board",d:"Rummy game"},
+ {n:"Andar Bahar",i:"🎴",c:"board",d:"Card game"},
+ {n:"Baccarat",i:"♣️",c:"board",d:"Card game"},
+ {n:"Dice",i:"🎲",c:"arcade",d:"Dice game"},
+ {n:"Card Game",i:"🃏",c:"board",d:"Card game"}
 ];
 
+/* Amounts */
+const amounts=[100,200,500,1000,2000,5000,10000,20000,30000];
 
-function renderGames(id,limit){
+let selectedDeposit=100;
+let selectedWithdraw=100;
+let selectedMethod="bKash";
 
-  const el =
-  document.getElementById(id);
+function renderGames(list=games){
+ const box=document.getElementById("games");
+ box.innerHTML="";
+ document.getElementById("gameCount").textContent=list.length+" games";
 
-  el.innerHTML =
-  games
-  .slice(0,limit || games.length)
-  .map(g => `
-
-  <div class="game">
-
-    <div class="gi">
-      ${g[0]}
-    </div>
-
-    ${
-      g[3]
-      ?
-      `<div class="tag">${g[3]}</div>`
-      :
-      ""
-    }
-
-    <div class="gn">
-      ${g[1]}
-    </div>
-
-    <div class="gd">
-      ${g[2]}
-    </div>
-
-    <button
-      class="play"
-      onclick="gameInfo('${g[1]}')">
-
-      Open
-
-    </button>
-
-  </div>
-
-  `)
-  .join("");
-
+ list.forEach(g=>{
+   box.innerHTML+=`
+   <div class="game">
+     <div class="gameImg">${g.i}</div>
+     <h3>${g.n}</h3>
+     <p>${g.d}</p>
+     <button class="open" onclick="openGame('${g.n}')">Open</button>
+   </div>`;
+ });
 }
 
+function renderAmounts(){
+ const d=document.getElementById("depositAmounts");
+ const w=document.getElementById("withdrawAmounts");
 
-renderGames("homeGames",8);
+ d.innerHTML=amounts.map(x=>
+ `<button class="amountBtn ${x===selectedDeposit?'selected':''}"
+ onclick="selectDeposit(${x})">${x.toLocaleString()}</button>`).join("");
 
-renderGames("allGames");
-
-
-let dep = 0;
-
-let wd = 0;
-
-let claimed = false;
-
-
-function renderAmounts(id,fn){
-
-  document.getElementById(id).innerHTML =
-
-  amounts
-  .map(a => `
-
-  <button
-    class="amt"
-    onclick="${fn}(${a},this)">
-
-    ${a.toLocaleString()}
-
-  </button>
-
-  `)
-  .join("");
-
+ w.innerHTML=amounts.map(x=>
+ `<button class="amountBtn ${x===selectedWithdraw?'selected':''}"
+ onclick="selectWithdraw(${x})">${x.toLocaleString()}</button>`).join("");
 }
 
-
-renderAmounts(
-  "depAmounts",
-  "pickDep"
-);
-
-renderAmounts(
-  "withAmounts",
-  "pickWd"
-);
-
-
-function pickDep(a,b){
-
-  dep = a;
-
-  document
-  .querySelectorAll("#depAmounts .amt")
-  .forEach(x =>
-    x.classList.remove("sel")
-  );
-
-  b.classList.add("sel");
-
+function selectDeposit(x){
+ selectedDeposit=x;
+ renderAmounts();
 }
 
-
-function pickWd(a,b){
-
-  wd = a;
-
-  document
-  .querySelectorAll("#withAmounts .amt")
-  .forEach(x =>
-    x.classList.remove("sel")
-  );
-
-  b.classList.add("sel");
-
+function selectWithdraw(x){
+ selectedWithdraw=x;
+ renderAmounts();
 }
 
+function selectMethod(el){
+ const parent=el.parentElement;
+ parent.querySelectorAll(".method").forEach(x=>x.classList.remove("selected"));
+ el.classList.add("selected");
+ selectedMethod=el.textContent.includes("Nagad")?"Nagad":"bKash";
+}
 
 function openDeposit(){
-
-  document
-  .getElementById("depositModal")
-  .classList.add("show");
-
+ renderAmounts();
+ document.getElementById("depositModal").classList.add("show");
 }
-
 
 function openWithdraw(){
-
-  document
-  .getElementById("withdrawModal")
-  .classList.add("show");
-
+ renderAmounts();
+ document.getElementById("withdrawModal").classList.add("show");
 }
 
-
-function closeM(id){
-
-  document
-  .getElementById(id)
-  .classList.remove("show");
-
+function openProfile(){
+ updateProfile();
+ document.getElementById("profileModal").classList.add("show");
 }
 
+function closeModal(id){
+ document.getElementById(id).classList.remove("show");
+}
 
 function submitDeposit(){
+ const ref=document.getElementById("depositRef").value.trim();
 
-  if(!dep){
+ if(!ref){
+   showInfo("Deposit","Please enter your payment reference / transaction ID.");
+   return;
+ }
 
-    return toast(
-      "Select a deposit amount first."
-    );
-
-  }
-
-
-  if(
-    document
-    .getElementById("depRef")
-    .value
-    .trim()
-    .length < 3
-  ){
-
-    return toast(
-      "Enter a payment reference."
-    );
-
-  }
-
-
-  closeM("depositModal");
-
-  toast(
-    "Deposit request sent for backend verification."
-  );
-
+ showInfo(
+ "Deposit Request",
+ "Your "+selectedDeposit.toLocaleString()+" coin deposit request using "+selectedMethod+
+ " has been recorded in this frontend demo. Real balance credit requires secure backend verification."
+ );
+ document.getElementById("depositRef").value="";
+ closeModal("depositModal");
 }
-
 
 function submitWithdraw(){
+ const num=document.getElementById("withdrawNumber").value.trim();
 
-  if(!wd){
+ if(!num){
+   showInfo("Withdraw","Please enter your bKash / Nagad number.");
+   return;
+ }
 
-    return toast(
-      "Select a withdrawal amount first."
-    );
-
-  }
-
-
-  if(
-
-    document
-    .getElementById("method")
-    .value
-    .trim()
-    .length < 2
-
-    ||
-
-    document
-    .getElementById("withdrawRef")
-    .value
-    .trim()
-    .length < 3
-
-  ){
-
-    return toast(
-      "Enter withdrawal method and account."
-    );
-
-  }
-
-
-  closeM("withdrawModal");
-
-  toast(
-    "Withdrawal request sent for backend verification."
-  );
-
+ showInfo(
+ "Withdrawal Request",
+ "Your "+selectedWithdraw.toLocaleString()+
+ " withdrawal request using "+selectedMethod+
+ " has been prepared. Real payout requires secure backend verification."
+ );
+ document.getElementById("withdrawNumber").value="";
+ closeModal("withdrawModal");
 }
 
-
-function claim(){
-
-  if(claimed){
-
-    return toast(
-      "Daily bonus already claimed."
-    );
-
-  }
-
-  claimed = true;
-
-  toast(
-    "Daily bonus will be connected to the secure backend."
-  );
-
+function showBonus(){
+ showInfo(
+ "🎁 Daily Bonus",
+ "Daily check-in rewards can be enabled from the secure backend. Come back every day to collect eligible rewards."
+ );
 }
 
-
-function gameInfo(n){
-
-  toast(
-    n + " is currently a UI prototype."
-  );
-
+function showReferral(){
+ showInfo(
+ "👥 Referral",
+ "Referral reward rule: an eligible referrer can receive 150 coins after the referred user completes a 1,000-coin deposit, subject to backend verification."
+ );
 }
 
-
-function openPage(p){
-
-  document
-  .querySelectorAll(".page")
-  .forEach(x =>
-    x.classList.remove("active")
-  );
-
-
-  document
-  .getElementById(p)
-  .classList.add("active");
-
-
-  document
-  .querySelectorAll(".ni")
-  .forEach(x =>
-    x.classList.toggle(
-      "active",
-      x.dataset.p === p
-    )
-  );
-
-
-  scrollTo(0,0);
-
+function showRanking(){
+ showInfo(
+ "🏆 Ranking",
+ "Leaderboard will display verified users and their eligible scores/rewards."
+ );
 }
 
-
-function toast(m){
-
-  const x =
-  document.getElementById("toast");
-
-  x.textContent = m;
-
-  x.classList.add("show");
-
-  clearTimeout(window.tt);
-
-  window.tt =
-  setTimeout(
-    () =>
-      x.classList.remove("show"),
-    2800
-  );
-
+function showInfo(title,text){
+ document.getElementById("infoTitle").textContent=title;
+ document.getElementById("infoText").textContent=text;
+ document.getElementById("infoModal").classList.add("show");
 }
 
-
-function copyRef(){
-
-  const r =
-  document.getElementById("ref")
-  .textContent;
-
-
-  navigator
-  .clipboard
-  ?.writeText(r)
-
-  .then(() =>
-    toast("Referral code copied.")
-  )
-
-  .catch(() =>
-    toast("Referral code: " + r)
-  );
-
+function openGame(name){
+ showInfo(
+ "🎮 "+name,
+ "This game is currently a frontend game card. A real game engine, game rounds, wallet validation and server-side result verification must be connected before real-money play."
+ );
 }
 
+function filterGames(category,btn){
+ document.querySelectorAll(".categories button")
+ .forEach(x=>x.classList.remove("active"));
 
-if(
-  tg?.initDataUnsafe?.user
-){
+ btn.classList.add("active");
 
-  const u =
-  tg.initDataUnsafe.user;
-
-
-  document
-  .getElementById("profileName")
-  .textContent =
-
-  [
-    u.first_name,
-    u.last_name
-  ]
-  .filter(Boolean)
-  .join(" ")
-
-  || "Telegram User";
-
-
-  document
-  .getElementById("uid")
-  .textContent =
-  u.id || "—";
-
-
-  document
-  .getElementById("ref")
-  .textContent =
-  "BDT_" +
-  String(u.id).slice(-6);
-
+ if(category==="all") renderGames(games);
+ else renderGames(games.filter(g=>g.c===category));
 }
 
+function scrollGames(){
+ document.querySelector(".section").scrollIntoView({behavior:"smooth"});
+}
 
-document
-.querySelectorAll(".modal")
-.forEach(m =>
+function home(){
+ window.scrollTo({top:0,behavior:"smooth"});
+}
 
-  m.addEventListener(
-    "click",
-    e => {
+function updateProfile(){
+ const c=document.getElementById("coins").textContent;
+ const b=document.getElementById("balance").textContent;
 
-      if(e.target === m){
+ document.getElementById("profileCoins").textContent=c;
+ document.getElementById("profileBalance").textContent="৳"+b;
 
-        m.classList.remove("show");
+ if(tg && tg.initDataUnsafe && tg.initDataUnsafe.user){
+   const u=tg.initDataUnsafe.user;
+   document.getElementById("userName").textContent=
+     ((u.first_name||"")+" "+(u.last_name||"")).trim() || "BDT CASH User";
+ }
+}
 
-      }
-
-    }
-  )
-
-);
-
-
-document
-.querySelectorAll(".cat")
-.forEach(c =>
-
-  c.onclick = () => {
-
-    document
-    .querySelectorAll(".cat")
-    .forEach(x =>
-      x.classList.remove("active")
-    );
-
-    c.classList.add("active");
-
-  }
-
-);
-
+/* Initial */
+renderGames();
+renderAmounts();
+updateProfile();
 </script>
 
 </body>
